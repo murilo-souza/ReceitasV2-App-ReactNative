@@ -5,7 +5,8 @@ import { Container } from './styles'
 export function SignInWithEmailAndPassword() {
   return (
     <Container>
-      <SignInInput title="E-mail" />
+      <SignInInput title="E-mail" placeholder="Digite seu E-mail" />
+      <SignInInput title="Senha" placeholder="Digite sua senha" />
       <Text>hcuhuchuheuy</Text>
     </Container>
   )
