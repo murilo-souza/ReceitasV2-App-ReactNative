@@ -1,6 +1,5 @@
 /* eslint-disable camelcase */
 import { ActivityIndicator } from 'react-native'
-import { Landing } from './src/screens/Landing'
 import {
   useFonts,
   Poppins_400Regular,
@@ -9,6 +8,7 @@ import {
 import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/styles/theme'
 import { StatusBar } from 'expo-status-bar'
+import { Routes } from './src/routes'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +19,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar translucent style="light" />
-      {fontsLoaded ? <Landing /> : <ActivityIndicator size="large" />}
+      {fontsLoaded ? <Routes /> : <ActivityIndicator size="large" />}
     </ThemeProvider>
   )
 }

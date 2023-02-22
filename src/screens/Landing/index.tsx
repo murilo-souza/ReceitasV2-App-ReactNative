@@ -2,8 +2,19 @@ import { SignInButton } from '../../components/SignInButton'
 import { AccessText, Container, Description, Title } from './styles'
 import GoogleSVG from '../../assets/googleIcon.svg'
 import { Envelope } from 'phosphor-react-native'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootParamList } from '../../routes/app.routes'
+
+type Props = StackNavigationProp<RootParamList, 'signInWithEmailAndPassword'>
 
 export function Landing() {
+  const navigation = useNavigation<Props>()
+
+  function handleSignInWithEmailAndPassword() {
+    navigation.navigate('signInWithEmailAndPassword')
+  }
+
   return (
     <Container>
       <Title>
@@ -18,7 +29,11 @@ export function Landing() {
       </Description>
       <AccessText>Acesse agora</AccessText>
       <SignInButton icon={GoogleSVG} title="Entrar com Google" />
-      <SignInButton icon={Envelope} title="Entrar com Email e senha" />
+      <SignInButton
+        icon={Envelope}
+        title="Entrar com Email e senha"
+        onPress={handleSignInWithEmailAndPassword}
+      />
     </Container>
   )
 }
