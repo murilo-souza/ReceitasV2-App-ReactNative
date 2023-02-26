@@ -1,4 +1,5 @@
 import styled from 'styled-components/native'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 export const Container = styled.View`
   flex: 1;
@@ -12,7 +13,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   font-family: ${(props) => props.theme.fonts.regular};
-  font-size: 32px;
+  font-size: ${RFValue(32)}px;
 
   color: ${(props) => props.theme.colors.slate100};
 
@@ -23,7 +24,7 @@ export const Title = styled.Text`
 
 export const Description = styled.Text`
   font-family: ${(props) => props.theme.fonts.regular};
-  font-size: 13px;
+  font-size: ${RFValue(12)}px;
 
   color: ${(props) => props.theme.colors.slate100};
 
@@ -34,7 +35,7 @@ export const Description = styled.Text`
 
 export const AccessText = styled.Text`
   font-family: ${(props) => props.theme.fonts.semiBold};
-  font-size: 13px;
+  font-size: ${RFValue(13)}px;
 
   color: ${(props) => props.theme.colors.slate100};
 

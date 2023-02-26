@@ -1,9 +1,10 @@
 import styled from 'styled-components/native'
 import { RectButton } from 'react-native-gesture-handler'
+import { RFValue } from 'react-native-responsive-fontsize'
 
 export const Container = styled(RectButton)`
   width: 100%;
-  height: 50px;
+  height: ${RFValue(50)}px;
 
   display: flex;
   flex-direction: row;
@@ -20,7 +21,7 @@ export const Container = styled(RectButton)`
 
 export const Divider = styled.View`
   width: 1px;
-  height: 50px;
+  height: ${RFValue(50)}px;
   background-color: #94a3b8;
   margin: 0 10px;
 `
@@ -29,5 +30,5 @@ export const Title = styled.Text`
   color: ${(props) => props.theme.colors.zinc800};
 
   font-family: ${(props) => props.theme.fonts.regular};
-  font-size: 15px;
+  font-size: ${RFValue(15)}px;
 `
