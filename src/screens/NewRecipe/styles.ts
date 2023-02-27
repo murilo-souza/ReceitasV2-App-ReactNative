@@ -11,7 +11,7 @@ export const Container = styled.ScrollView`
 export const Form = styled.View`
   margin-top: 20px;
 
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 `
 
 export const TypeButtonWrapper = styled.View`

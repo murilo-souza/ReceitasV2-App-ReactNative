@@ -12,12 +12,12 @@ export const Container = styled(RectButton)`
 
   width: ${RFValue(150)}px;
   height: ${RFValue(50)}px;
-  border-radius: 10px;
+  border-radius: 5px;
 `
 
 export const Stroke = styled.View`
   border: 1px solid ${(props) => props.theme.colors.indigo400};
-  border-radius: 10px;
+  border-radius: 5px;
 `
 
 export const Title = styled.Text`

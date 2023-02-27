@@ -28,6 +28,10 @@ export function Home() {
   function handleNewRecipe() {
     navigation.navigate('newRecipe')
   }
+
+  function handleRecipeDetail() {
+    navigation.navigate('recipeDetails')
+  }
   return (
     <Container>
       <Header>
@@ -45,12 +49,13 @@ export function Home() {
         <Quantity>Total 5</Quantity>
       </HeaderListWrapper>
       <FilterWrapper>
-        <FilterButton icon={CookingPot} title="Salgados" />
-        <FilterButton icon={Cookie} title="Sobremesa" />
+        <FilterButton icon={CookingPot} title="Salgados" isActive={true} />
+        <FilterButton icon={Cookie} title="Sobremesa" isActive={false} />
       </FilterWrapper>
       <Card
         title="Costelinha Barbecue"
         description="Costelinha com molho caseiro"
+        onPress={handleRecipeDetail}
       />
     </Container>
   )

@@ -15,6 +15,8 @@ export const Container = styled(RectButton)<ButtonProps>`
 
   border-radius: 5px;
 
+  margin-bottom: 31px;
+
   ${({ variant }) =>
     variant === 'submit' &&
     css`
@@ -34,10 +36,26 @@ export const Container = styled(RectButton)<ButtonProps>`
     `}
 `
 
-export const Title = styled.Text`
+export const Title = styled.Text<ButtonProps>`
   font-family: ${(props) => props.theme.fonts.semiBold};
 
-  color: ${(props) => props.theme.colors.white};
+  ${({ variant }) =>
+    variant === 'edit' &&
+    css`
+      color: ${(props) => props.theme.colors.zinc800};
+    `}
+
+  ${({ variant }) =>
+    variant === 'submit' &&
+    css`
+      color: ${(props) => props.theme.colors.white};
+    `}
+
+  ${({ variant }) =>
+    variant === 'delete' &&
+    css`
+      color: ${(props) => props.theme.colors.white};
+    `}
 
   font-size: ${RFValue(16)}px;
 `

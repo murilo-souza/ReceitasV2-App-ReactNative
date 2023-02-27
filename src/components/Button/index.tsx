@@ -10,7 +10,7 @@ type Props = RectButtonProps & {
 export function Button({ title, variant, ...rest }: Props) {
   return (
     <Container {...rest} variant={variant}>
-      <Title>{title}</Title>
+      <Title variant={variant}>{title}</Title>
     </Container>
   )
 }
