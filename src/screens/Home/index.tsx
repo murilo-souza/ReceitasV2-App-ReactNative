@@ -16,8 +16,18 @@ import {
   UserInfo,
   UserName,
 } from './styles'
+import { useNavigation } from '@react-navigation/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootParamList } from '../../routes/app.routes'
+
+type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 
 export function Home() {
+  const navigation = useNavigation<Props>()
+
+  function handleNewRecipe() {
+    navigation.navigate('newRecipe')
+  }
   return (
     <Container>
       <Header>
@@ -28,7 +38,7 @@ export function Home() {
             <UserDescription>Masterchef</UserDescription>
           </User>
         </UserInfo>
-        <AddNewRecipeButton />
+        <AddNewRecipeButton onPress={handleNewRecipe} />
       </Header>
       <HeaderListWrapper>
         <ListTitle>Suas Receitas</ListTitle>

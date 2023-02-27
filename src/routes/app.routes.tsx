@@ -3,12 +3,14 @@ import { Landing } from '../screens/Landing'
 import { SignInWithEmailAndPassword } from '../screens/SignIn/SignInWithEmailAndPassword'
 import { SignUpWithEmailAndPassword } from '../screens/SignIn/SignUpWithEmailAndPassword'
 import { Home } from '../screens/Home'
+import { NewRecipe } from '../screens/NewRecipe'
 
 export type RootParamList = {
   landing: undefined
   signInWithEmailAndPassword: undefined
   signUpWithEmailAndPassword: undefined
   home: undefined
+  newRecipe: undefined
 }
 const { Navigator, Screen } = createStackNavigator<RootParamList>()
 
@@ -25,6 +27,7 @@ export function AppRoutes() {
         component={SignUpWithEmailAndPassword}
       />
       <Screen name="home" component={Home} />
+      <Screen name="newRecipe" component={NewRecipe} />
     </Navigator>
   )
 }
