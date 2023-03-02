@@ -1,5 +1,5 @@
 import { Cookie, CookingPot } from 'phosphor-react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { AddNewRecipeButton } from '../../components/AddNewRecipeButton'
 import { Card } from '../../components/Card'
 import { FilterButton } from '../../components/FilterButton'
@@ -32,6 +32,9 @@ export function Home() {
   function handleRecipeDetail() {
     navigation.navigate('recipeDetails')
   }
+
+  useEffect(() => {}, [])
+
   return (
     <Container>
       <Header>
@@ -57,6 +60,10 @@ export function Home() {
         description="Costelinha com molho caseiro"
         onPress={handleRecipeDetail}
       />
+
+      {/* <RectButton onPress={handleSignOut}>
+        <Text>Signout</Text>
+      </RectButton> */}
     </Container>
   )
 }

@@ -4,9 +4,12 @@ import GoogleSVG from '../../assets/googleIcon.svg'
 import { Envelope } from 'phosphor-react-native'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
-import { RootParamList } from '../../routes/app.routes'
+import { RootParamListPublic } from '../../routes/public.routes'
 
-type Props = StackNavigationProp<RootParamList, 'signInWithEmailAndPassword'>
+type Props = StackNavigationProp<
+  RootParamListPublic,
+  'signInWithEmailAndPassword'
+>
 
 export function Landing() {
   const navigation = useNavigation<Props>()
