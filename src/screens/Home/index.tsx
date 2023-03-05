@@ -3,7 +3,7 @@ import { Cookie, CookingPot } from 'phosphor-react-native'
 import React, { useEffect, useState } from 'react'
 import { AddNewRecipeButton } from '../../components/AddNewRecipeButton'
 import { Card } from '../../components/Card'
-import { FlatList } from 'react-native'
+import { ActivityIndicator, FlatList } from 'react-native'
 
 import { FilterButton } from '../../components/FilterButton'
 import {
@@ -26,6 +26,7 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
+import { useTheme } from 'styled-components/native'
 
 type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 
@@ -39,8 +40,10 @@ type RecipeCardProps = {
 }
 
 export function Home() {
+  const theme = useTheme()
   const [recipeType, setRecipeType] = useState<'salty' | 'sweet'>('salty')
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   const navigation = useNavigation<Props>()
 
@@ -75,6 +78,7 @@ export function Home() {
           }
         })
         setRecipes(data)
+        setIsLoading(false)
       })
     return recipeList
   }, [recipeType])
@@ -98,30 +102,33 @@ export function Home() {
       <FilterWrapper>
         <FilterButton
           icon={CookingPot}
-          title="Salgados"
+          title="Salgado"
           isActive={recipeType === 'salty'}
           onPress={() => setRecipeType('salty')}
         />
         <FilterButton
           icon={Cookie}
-          title="Sobremesa"
+          title="Doce"
           isActive={recipeType === 'sweet'}
           onPress={() => setRecipeType('sweet')}
         />
       </FilterWrapper>
-      <FlatList
-        data={recipes}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Card
-            title={item.title}
-            description={item.description}
-            onPress={() => handleRecipeDetail(item.id)}
-          />
-        )}
-        showsVerticalScrollIndicator={false}
-      />
-
+      {isLoading ? (
+        <ActivityIndicator size="large" color={theme.colors.indigo600} />
+      ) : (
+        <FlatList
+          data={recipes}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Card
+              title={item.title}
+              description={item.description}
+              onPress={() => handleRecipeDetail(item.id)}
+            />
+          )}
+          showsVerticalScrollIndicator={false}
+        />
+      )}
       {/* <RectButton onPress={handleSignOut}>
         <Text>Signout</Text>
       </RectButton> */}

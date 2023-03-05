@@ -10,6 +10,8 @@ import { ActivityIndicator } from 'react-native'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 import { useTheme } from 'styled-components/native'
+import { StackNavigationProp } from '@react-navigation/stack'
+import { RootParamList } from '../../routes/app.routes'
 
 type RouteParams = {
   recipeId: string
@@ -21,18 +23,30 @@ type RecipeCardProps = {
   prepare: string
 }
 
+type Props = StackNavigationProp<RootParamList, 'home'>
+
 export function RecipeDetails() {
   const [recipe, setRecipe] = useState<RecipeCardProps>({} as RecipeCardProps)
 
   const [loading, setLoading] = useState(true)
   const theme = useTheme()
 
-  const navigation = useNavigation()
+  const navigation = useNavigation<Props>()
   const route = useRoute()
   const { recipeId } = route.params as RouteParams
+  const uid = auth().currentUser.uid
+
+  function handleDeleteRecipe() {
+    firestore()
+      .collection('users')
+      .doc(uid)
+      .collection('receitas')
+      .doc(recipeId)
+      .delete()
+    navigation.navigate('home')
+  }
 
   useEffect(() => {
-    const uid = auth().currentUser.uid
     firestore()
       .collection('users')
       .doc(uid)
@@ -48,7 +62,7 @@ export function RecipeDetails() {
         })
         setLoading(false)
       })
-  }, [recipeId])
+  }, [recipeId, uid])
 
   return (
     <Container>
@@ -80,7 +94,11 @@ export function RecipeDetails() {
           </DetailsWrapper>
           <Button title="Editar receita" variant="edit" />
 
-          <Button title="Deletar receita" variant="delete" />
+          <Button
+            title="Deletar receita"
+            variant="delete"
+            onPress={handleDeleteRecipe}
+          />
         </RecipeScroll>
       )}
     </Container>
