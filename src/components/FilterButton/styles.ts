@@ -1,14 +1,24 @@
 import styled, { css } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
+import { RectButton } from 'react-native-gesture-handler'
 
 interface TypeProps {
   isActive: boolean
 }
 
-export const Container = styled.View<TypeProps>`
+export const Stroke = styled.View<TypeProps>`
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      border: 1px solid ${(props) => props.theme.colors.indigo400};
+      border-radius: 5px;
+    `}
+`
+
+export const Container = styled(RectButton)<TypeProps>`
   display: flex;
   flex-direction: row;
-  width: 47%;
+  width: ${RFValue(150)}px;
 
   align-items: center;
   justify-content: center;
@@ -18,12 +28,6 @@ export const Container = styled.View<TypeProps>`
   padding: 5px;
 
   border-radius: 5px;
-
-  ${({ isActive }) =>
-    isActive &&
-    css`
-      border: 1px solid ${(props) => props.theme.colors.indigo400};
-    `}
 `
 
 export const Title = styled.Text<TypeProps>`

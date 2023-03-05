@@ -6,7 +6,7 @@ import { RecipeDetails } from '../screens/RecipeDetails'
 export type RootParamList = {
   home: undefined
   newRecipe: undefined
-  recipeDetails: undefined
+  recipeDetails: { recipeId: string }
 }
 const { Navigator, Screen } = createStackNavigator<RootParamList>()
 

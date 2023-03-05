@@ -1,24 +1,27 @@
 import { IconProps } from 'phosphor-react-native'
 import React, { ElementType } from 'react'
+import { RectButtonProps } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
-import { Container, Title } from './styles'
+import { Container, Stroke, Title } from './styles'
 
-interface Props {
+interface Props extends RectButtonProps {
   title: string
   icon: ElementType<IconProps>
   isActive: boolean
 }
 
-export function FilterButton({ title, icon: Icon, isActive }: Props) {
+export function FilterButton({ title, icon: Icon, isActive, ...rest }: Props) {
   const theme = useTheme()
 
   return (
-    <Container isActive={isActive}>
-      <Icon
-        size={25}
-        color={isActive ? theme.colors.indigo400 : theme.colors.slate100}
-      />
-      <Title isActive={isActive}>{title}</Title>
-    </Container>
+    <Stroke isActive={isActive}>
+      <Container isActive={isActive} {...rest}>
+        <Icon
+          size={25}
+          color={isActive ? theme.colors.indigo400 : theme.colors.slate100}
+        />
+        <Title isActive={isActive}>{title}</Title>
+      </Container>
+    </Stroke>
   )
 }
