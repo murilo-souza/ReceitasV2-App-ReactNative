@@ -7,17 +7,15 @@ import { InputLarge } from '../../InputLarge'
 interface Props extends TextInputProps {
   control: Control
   name: string
-  error: string
+  error: any
   title: string
-  inputType: 'signin' | 'small' | 'large'
 }
 
-export function InputForm({
+export function LargeInputForm({
   control,
   name,
   error,
   title,
-  inputType,
   ...rest
 }: Props) {
   return (

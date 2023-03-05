@@ -7,15 +7,16 @@ import { Container, Stroke, Title } from './styles'
 type Props = RectButtonProps & {
   title: string
   icon: ElementType<IconProps>
+  isActive: boolean
 }
 
-export function TypeButton({ title, icon: Icon, ...rest }: Props) {
+export function TypeButton({ title, icon: Icon, isActive, ...rest }: Props) {
   const theme = useTheme()
 
   return (
-    <Stroke>
+    <Stroke isActive={isActive}>
       <Container {...rest}>
-        <Icon size={30} color={theme.colors.indigo400} />
+        <Icon size={30} color={theme.colors.white} />
         <Title>{title}</Title>
       </Container>
     </Stroke>

@@ -28,6 +28,4 @@ export const RecipeInputText = styled.TextInput.attrs({
   color: ${(props) => props.theme.colors.slate100};
 
   padding: 10px;
-
-  margin-bottom: 30px;
 `
