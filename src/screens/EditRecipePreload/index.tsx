@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import { Container, Form, TypeButtonWrapper } from './styles'
 import { Header } from '../../components/Header'
 import { Button } from '../../components/Button'
@@ -34,6 +34,7 @@ const schema = yup.object().shape({
 export function EditRecipePreload({ preload, recipeId }) {
   const navigation = useNavigation<Props>()
   const uid = auth().currentUser.uid
+  const [loading, setLoading] = useState(false)
 
   const [recipeType, setRecipeType] = useState(preload.type)
 
@@ -45,6 +46,8 @@ export function EditRecipePreload({ preload, recipeId }) {
     if (!recipeType) {
       return Alert.alert('Selecione o tipo da receita')
     }
+
+    setLoading(true)
 
     const NewRecipe = {
       title: form.title,
@@ -62,6 +65,7 @@ export function EditRecipePreload({ preload, recipeId }) {
       .update(NewRecipe)
 
     navigation.navigate('home')
+    setLoading(false)
     reset()
   }
 
@@ -129,6 +133,8 @@ export function EditRecipePreload({ preload, recipeId }) {
           />
         </TypeButtonWrapper>
         <Button
+          isLoading={loading}
+          enabled={!loading}
           title="Editar receita"
           variant="edit"
           onPress={handleSubmit(handleNewRecipe)}

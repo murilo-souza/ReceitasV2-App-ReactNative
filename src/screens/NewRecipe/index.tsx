@@ -7,7 +7,7 @@ import { Cookie, CookingPot } from 'phosphor-react-native'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Alert } from 'react-native'
+import { Alert, ActivityIndicator } from 'react-native'
 import { SmallInputForm } from '../../components/InputForm/SmallInputForm'
 import { LargeInputForm } from '../../components/InputForm/LargeInputForm'
 import firestore from '@react-native-firebase/firestore'
@@ -15,6 +15,7 @@ import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 import { RootParamList } from '../../routes/app.routes'
+import { useTheme } from 'styled-components/native'
 
 type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 interface FormData {
@@ -34,6 +35,8 @@ const schema = yup.object().shape({
 export function NewRecipe() {
   const [recipeType, setRecipeType] = useState('')
   const navigation = useNavigation<Props>()
+  const [loading, setLoading] = useState(false)
+  const theme = useTheme()
 
   const {
     control,
@@ -49,6 +52,7 @@ export function NewRecipe() {
   }
 
   async function handleNewRecipe(form: FormData) {
+    setLoading(true)
     if (!recipeType) {
       return Alert.alert('Selecione o tipo da receita')
     }
@@ -72,6 +76,7 @@ export function NewRecipe() {
       .set(NewRecipe)
 
     navigation.navigate('home')
+    setLoading(false)
     reset()
   }
 
@@ -128,10 +133,19 @@ export function NewRecipe() {
           />
         </TypeButtonWrapper>
         <Button
+          isLoading={loading}
           title="Salvar receita"
           variant="submit"
           onPress={handleSubmit(handleNewRecipe)}
+          enabled={!loading}
         />
+        {loading && (
+          <ActivityIndicator
+            size="large"
+            color={theme.colors.indigo600}
+            style={{ marginBottom: 20 }}
+          />
+        )}
       </Form>
     </Container>
   )

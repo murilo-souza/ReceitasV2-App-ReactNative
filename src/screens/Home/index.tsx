@@ -12,12 +12,7 @@ import {
   Header,
   HeaderListWrapper,
   ListTitle,
-  Photo,
   Quantity,
-  User,
-  UserDescription,
-  UserInfo,
-  UserName,
 } from './styles'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -27,6 +22,7 @@ import firestore, {
 } from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { useTheme } from 'styled-components/native'
+import { UserInfo } from '../../components/UserInfo'
 
 type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 
@@ -86,13 +82,7 @@ export function Home() {
   return (
     <Container>
       <Header>
-        <UserInfo>
-          <Photo source={{ uri: 'https://github.com/murilo-souza.png' }} />
-          <User>
-            <UserName>Olá, Murilo</UserName>
-            <UserDescription>Masterchef</UserDescription>
-          </User>
-        </UserInfo>
+        <UserInfo />
         <AddNewRecipeButton onPress={handleNewRecipe} />
       </Header>
       <HeaderListWrapper>

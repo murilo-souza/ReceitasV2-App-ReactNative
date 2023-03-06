@@ -81,6 +81,7 @@ export function SignInWithEmailAndPassword() {
           secureTextEntry={true}
         />
         <Button
+          isLoading={isLoading}
           title="Entrar"
           variant="submit"
           onPress={handleHome}

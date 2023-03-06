@@ -13,6 +13,7 @@ export function SignUpWithEmailAndPassword() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmePassword, setConfirmePassword] = useState('')
+  const [loading, setLoading] = useState(false)
 
   function handleHome() {
     if (!name || !email || !password || !confirmePassword) {
@@ -23,6 +24,7 @@ export function SignUpWithEmailAndPassword() {
       return Alert.alert('Entrar', 'As senhas precisam ser iguais')
     }
 
+    setLoading(true)
     auth()
       .createUserWithEmailAndPassword(email, password)
       .then((userData) => {
@@ -32,8 +34,10 @@ export function SignUpWithEmailAndPassword() {
           Email: email,
           Name: name,
         })
+        setLoading(false)
       })
       .catch((error) => {
+        setLoading(false)
         if (error.code === 'auth/invalid-email') {
           return Alert.alert('Entrar', 'E-mail inválido')
         }
@@ -74,7 +78,13 @@ export function SignUpWithEmailAndPassword() {
           value={confirmePassword}
           autoCapitalize="none"
         />
-        <Button title="Cadastrar" variant="submit" onPress={handleHome} />
+        <Button
+          title="Cadastrar"
+          variant="submit"
+          onPress={handleHome}
+          isLoading={loading}
+          enabled={!loading}
+        />
       </InputWrapper>
     </Container>
   )

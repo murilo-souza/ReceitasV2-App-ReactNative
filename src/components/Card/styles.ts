@@ -15,6 +15,8 @@ export const Container = styled(RectButton)`
   border-radius: 5px;
 
   background-color: ${(props) => props.theme.colors.zinc700};
+
+  margin-bottom: 30px;
 `
 
 export const TextWrapper = styled.View`
