@@ -19,6 +19,7 @@ export const Header = styled.View`
   flex-direction: row;
 
   align-items: center;
+  margin-bottom: 10px;
 `
 
 export const Title = styled.Text`
@@ -26,7 +27,7 @@ export const Title = styled.Text`
 
   color: ${(props) => props.theme.colors.white};
 
-  font-size: ${RFValue(14)}px;
+  font-size: ${RFValue(15)}px;
   font-family: ${(props) => props.theme.fonts.regular};
 
   margin-left: 10px;
@@ -37,4 +38,6 @@ export const Content = styled.Text`
 
   font-size: ${RFValue(14)}px;
   font-family: ${(props) => props.theme.fonts.regular};
+
+  line-height: 25px;
 `

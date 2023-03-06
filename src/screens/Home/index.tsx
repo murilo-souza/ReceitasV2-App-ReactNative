@@ -3,7 +3,7 @@ import { Cookie, CookingPot } from 'phosphor-react-native'
 import React, { useEffect, useState } from 'react'
 import { AddNewRecipeButton } from '../../components/AddNewRecipeButton'
 import { Card } from '../../components/Card'
-import { ActivityIndicator, FlatList } from 'react-native'
+import { FlatList } from 'react-native'
 
 import { FilterButton } from '../../components/FilterButton'
 import {
@@ -21,8 +21,8 @@ import firestore, {
   FirebaseFirestoreTypes,
 } from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
-import { useTheme } from 'styled-components/native'
 import { UserInfo } from '../../components/UserInfo'
+import { Loading } from '../../components/Loading'
 
 type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 
@@ -36,10 +36,10 @@ type RecipeCardProps = {
 }
 
 export function Home() {
-  const theme = useTheme()
   const [recipeType, setRecipeType] = useState<'salty' | 'sweet'>('salty')
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [name, setName] = useState<any>('')
 
   const navigation = useNavigation<Props>()
 
@@ -53,6 +53,14 @@ export function Home() {
 
   useEffect(() => {
     const uid = auth().currentUser.uid
+
+    firestore()
+      .collection('users')
+      .doc(uid)
+      .onSnapshot((snapshot) => {
+        const name = snapshot.get('Name')
+        setName(name)
+      })
 
     const recipeList = firestore()
       .collection('users')
@@ -74,54 +82,54 @@ export function Home() {
           }
         })
         setRecipes(data)
-        setIsLoading(false)
       })
+
+    setIsLoading(false)
     return recipeList
   }, [recipeType])
 
   return (
-    <Container>
-      <Header>
-        <UserInfo />
-        <AddNewRecipeButton onPress={handleNewRecipe} />
-      </Header>
-      <HeaderListWrapper>
-        <ListTitle>Suas Receitas</ListTitle>
-        <Quantity>Total {recipes.length}</Quantity>
-      </HeaderListWrapper>
-      <FilterWrapper>
-        <FilterButton
-          icon={CookingPot}
-          title="Salgado"
-          isActive={recipeType === 'salty'}
-          onPress={() => setRecipeType('salty')}
-        />
-        <FilterButton
-          icon={Cookie}
-          title="Doce"
-          isActive={recipeType === 'sweet'}
-          onPress={() => setRecipeType('sweet')}
-        />
-      </FilterWrapper>
+    <>
       {isLoading ? (
-        <ActivityIndicator size="large" color={theme.colors.indigo600} />
+        <Loading />
       ) : (
-        <FlatList
-          data={recipes}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => (
-            <Card
-              title={item.title}
-              description={item.description}
-              onPress={() => handleRecipeDetail(item.id)}
+        <Container>
+          <Header>
+            <UserInfo username={name} />
+            <AddNewRecipeButton onPress={handleNewRecipe} />
+          </Header>
+          <HeaderListWrapper>
+            <ListTitle>Suas Receitas</ListTitle>
+            <Quantity>Total {recipes.length}</Quantity>
+          </HeaderListWrapper>
+          <FilterWrapper>
+            <FilterButton
+              icon={CookingPot}
+              title="Salgado"
+              isActive={recipeType === 'salty'}
+              onPress={() => setRecipeType('salty')}
             />
-          )}
-          showsVerticalScrollIndicator={false}
-        />
+            <FilterButton
+              icon={Cookie}
+              title="Doce"
+              isActive={recipeType === 'sweet'}
+              onPress={() => setRecipeType('sweet')}
+            />
+          </FilterWrapper>
+          <FlatList
+            data={recipes}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => (
+              <Card
+                title={item.title}
+                description={item.description}
+                onPress={() => handleRecipeDetail(item.id)}
+              />
+            )}
+            showsVerticalScrollIndicator={false}
+          />
+        </Container>
       )}
-      {/* <RectButton onPress={handleSignOut}>
-        <Text>Signout</Text>
-      </RectButton> */}
-    </Container>
+    </>
   )
 }

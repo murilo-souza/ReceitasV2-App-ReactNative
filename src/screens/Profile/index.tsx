@@ -9,6 +9,7 @@ import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
 import { useNavigation } from '@react-navigation/native'
+import { Loading } from '../../components/Loading'
 
 type Props = StackNavigationProp<RootParamList, 'home'>
 
@@ -42,21 +43,29 @@ export function Profile() {
   }
 
   return (
-    <Container>
-      <Header title="Detalhes de perfil" />
-      <Wrapper>
-        <PhotoWrapper>
-          <PhotoUser source={{ uri: 'https://github.com/murilo-souza.png' }} />
-        </PhotoWrapper>
-        <InputProfile icon={User} onChangeText={setName} value={name} />
-        <Button
-          title="Editar perfil"
-          variant="submit"
-          isLoading={loading}
-          enabled={!loading}
-          onPress={handleUpdateUser}
-        />
-      </Wrapper>
-    </Container>
+    <>
+      {loadingScreen ? (
+        <Loading />
+      ) : (
+        <Container>
+          <Header title="Detalhes de perfil" />
+          <Wrapper>
+            <PhotoWrapper>
+              <PhotoUser
+                source={{ uri: 'https://github.com/murilo-souza.png' }}
+              />
+            </PhotoWrapper>
+            <InputProfile icon={User} onChangeText={setName} value={name} />
+            <Button
+              title="Editar perfil"
+              variant="submit"
+              isLoading={loading}
+              enabled={!loading}
+              onPress={handleUpdateUser}
+            />
+          </Wrapper>
+        </Container>
+      )}
+    </>
   )
 }

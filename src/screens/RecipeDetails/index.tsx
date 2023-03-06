@@ -5,13 +5,14 @@ import { CardDetails } from '../../components/CardDetails/inde'
 import { Header } from '../../components/Header'
 import { RecipeScroll, Container, DetailsWrapper } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator, Alert } from 'react-native'
+import { Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
-import { useTheme } from 'styled-components/native'
+
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
+import { Loading } from '../../components/Loading'
 
 type RouteParams = {
   recipeId: string
@@ -29,7 +30,6 @@ export function RecipeDetails() {
   const [recipe, setRecipe] = useState<RecipeCardProps>({} as RecipeCardProps)
 
   const [loading, setLoading] = useState(true)
-  const theme = useTheme()
 
   const navigation = useNavigation<Props>()
   const route = useRoute()
@@ -84,46 +84,47 @@ export function RecipeDetails() {
   }, [recipeId, uid])
 
   return (
-    <Container>
-      <Header title="Detalhes da receita" />
+    <>
       {loading ? (
-        <ActivityIndicator
-          size="large"
-          color={theme.colors.indigo600}
-          style={{ alignItems: 'center', justifyContent: 'center' }}
-        />
+        <Loading />
       ) : (
-        <RecipeScroll>
-          <DetailsWrapper>
-            <CardDetails
-              title="Título"
-              content={recipe.title}
-              icon={Notebook}
-            />
-            <CardDetails
-              title="Ingredientes"
-              content={recipe.ingredients}
-              icon={Scroll}
-            />
-            <CardDetails
-              title="Modo de Preparo"
-              content={recipe.prepare}
-              icon={CookingPot}
-            />
-          </DetailsWrapper>
-          <Button
-            title="Editar receita"
-            variant="edit"
-            onPress={() => handleEditRecipe(recipeId)}
-          />
+        <Container>
+          <Header title="Detalhes da receita" />
 
-          <Button
-            title="Deletar receita"
-            variant="delete"
-            onPress={AlertDelete}
-          />
-        </RecipeScroll>
+          <RecipeScroll>
+            <DetailsWrapper>
+              <CardDetails
+                title="Título"
+                content={recipe.title}
+                icon={Notebook}
+              />
+              <CardDetails
+                title="Ingredientes"
+                content={recipe.ingredients}
+                icon={Scroll}
+              />
+              <CardDetails
+                title="Modo de Preparo"
+                content={recipe.prepare}
+                icon={CookingPot}
+              />
+            </DetailsWrapper>
+            <Button
+              title="Editar receita"
+              variant="edit"
+              onPress={() => handleEditRecipe(recipeId)}
+              isLoading={false}
+            />
+
+            <Button
+              title="Deletar receita"
+              variant="delete"
+              onPress={AlertDelete}
+              isLoading={false}
+            />
+          </RecipeScroll>
+        </Container>
       )}
-    </Container>
+    </>
   )
 }
