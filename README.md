@@ -6,4 +6,16 @@
 <h2>Project</h2>
 <p>Project to save my own recipes. Using React Native with typescript to develop this project and Firebase to save recipes in database</p>
 
+<h2>Stacks</h2>
+<ul>
+  <li><a href="">Yup</a></li>
+  <li><a href="">Expo</a></li>
+  <li><a href="">Firebase</a></li>
+  <li><a href="">React Native</a></li>
+  <li><a href="">Phosphor react</a></li>
+  <li><a href="">React Navigation</a></li>
+  <li><a href="">React Hook Form</a></li>
+  <li><a href="">Styled components</a></li>
+</ul>
+
 :construction: Projeto em desenvolvimento :construction:
