@@ -1,24 +1,13 @@
 import styled from 'styled-components/native'
 
-export const Container = styled.ScrollView`
+export const Container = styled.View`
   flex: 1;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   background-color: ${(props) => props.theme.colors.zinc900};
 
-  padding: 20px;
-`
-
-export const Form = styled.View`
-  margin-top: 20px;
-
-  margin-bottom: 40px;
-`
-
-export const TypeButtonWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 40px;
+  padding: 20px 20px 0 20px;
 `

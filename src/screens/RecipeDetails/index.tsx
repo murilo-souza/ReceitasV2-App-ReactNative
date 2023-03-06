@@ -5,7 +5,7 @@ import { CardDetails } from '../../components/CardDetails/inde'
 import { Header } from '../../components/Header'
 import { RecipeScroll, Container, DetailsWrapper } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -44,6 +44,25 @@ export function RecipeDetails() {
       .doc(recipeId)
       .delete()
     navigation.navigate('home')
+  }
+
+  function AlertDelete() {
+    Alert.alert(
+      'Deletar receita',
+      'Tem certeza que deseja excluir essa receita?',
+      [
+        {
+          text: 'Manter',
+          onPress: () => {},
+          style: 'cancel',
+        },
+        { text: 'Excluir', onPress: () => handleDeleteRecipe() },
+      ],
+    )
+  }
+
+  function handleEditRecipe(recipeId: string) {
+    navigation.navigate('editRecipe', { recipeId })
   }
 
   useEffect(() => {
@@ -92,12 +111,16 @@ export function RecipeDetails() {
               icon={CookingPot}
             />
           </DetailsWrapper>
-          <Button title="Editar receita" variant="edit" />
+          <Button
+            title="Editar receita"
+            variant="edit"
+            onPress={() => handleEditRecipe(recipeId)}
+          />
 
           <Button
             title="Deletar receita"
             variant="delete"
-            onPress={handleDeleteRecipe}
+            onPress={AlertDelete}
           />
         </RecipeScroll>
       )}

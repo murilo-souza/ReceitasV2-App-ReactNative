@@ -1,39 +1,55 @@
-import React from 'react'
-import { Container, Form, TypeButtonWrapper } from './styles'
-import { Header } from '../../components/Header'
-import { InputSmall } from '../../components/InputSmall'
-import { InputLarge } from '../../components/InputLarge'
-import { Button } from '../../components/Button'
-import { TypeButton } from '../../components/TypeButton'
-import { Cookie, CookingPot } from 'phosphor-react-native'
+import React, { useState, useEffect } from 'react'
+import { EditRecipePreload } from '../EditRecipePreload'
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+import { useRoute } from '@react-navigation/native'
+import { ActivityIndicator } from 'react-native'
+import { Container } from './styles'
+import { useTheme } from 'styled-components/native'
+
+interface FormData {
+  title: string
+  description: string
+  ingredients: string
+  prepare: string
+  type: string
+}
+
+type RouteParams = {
+  recipeId: string
+}
 
 export function EditRecipe() {
-  return (
+  const [recipeToEdit, setRecipeToEdit] = useState<FormData>(null)
+  const route = useRoute()
+  const { recipeId } = route.params as RouteParams
+  const uid = auth().currentUser.uid
+  const theme = useTheme()
+
+  useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(uid)
+      .collection('receitas')
+      .doc(recipeId)
+      .get()
+      .then((doc) => {
+        const { title, description, ingredients, prepare, type } = doc.data()
+        setRecipeToEdit({
+          title,
+          description,
+          ingredients,
+          prepare,
+          type,
+        })
+      })
+  }, [recipeId, uid])
+
+  return recipeToEdit ? (
+    <EditRecipePreload preload={recipeToEdit} recipeId={recipeId} />
+  ) : (
     <Container>
-      <Header title="Criar receita" />
-      <Form>
-        <InputSmall
-          title="Título"
-          placeholder="Digite o titulo da sua receita"
-        />
-        <InputSmall
-          title="Descrição"
-          placeholder="De uma descrição para sua receita"
-        />
-        <InputLarge
-          title="Ingredientes"
-          placeholder="Digite os ingredientes da sua receita"
-        />
-        <InputLarge
-          title="Modo de preparo"
-          placeholder="Como é feita sua receita?"
-        />
-        <TypeButtonWrapper>
-          <TypeButton title="Salgado" icon={CookingPot} />
-          <TypeButton title="Sobremesa" icon={Cookie} />
-        </TypeButtonWrapper>
-        <Button title="Salvar receita" variant="submit" />
-      </Form>
+      <ActivityIndicator size="large" color={theme.colors.indigo600} />
     </Container>
   )
 }
