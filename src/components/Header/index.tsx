@@ -52,21 +52,25 @@ export function Header({ title, share = false, recipeId = '' }: Props) {
 
   async function handleShareRecipeWithPDF() {
     const html = `
-      <html style="background-color: ${theme.colors.zinc900}">
+      <html>
         <body>
-          <h1>Receita Compartilhada</h1>
+          <h1 style="font-size: 3rem">Receita Compartilhada</h1>
           <br/>
           
-          <h2>Título</h2>
-          <p>${recipe.title}</p>
+          <h2 style="font-size: 2rem">Título</h2>
+          <p style="font-size: 1.5rem">${recipe.title}</p>
           <br/>
 
-          <h2>Ingredientes</h2>
-          <p>${recipe.ingredients}</p>
+          <h2 style="font-size: 2rem">Ingredientes</h2>
+          <textarea rows=${recipe.ingredients.length / 12} cols="40">
+            ${recipe.ingredients}
+          </textarea>
           <br/>
 
-          <h2>Modo de preparo</h2>
-          <p>${recipe.prepare}</p>
+          <h2 style="font-size: 2rem">Modo de preparo</h2>
+          <textarea rows=${recipe.prepare.length / 15} cols="40">
+            ${recipe.prepare}
+          </textarea>
         </body>
       </html>
     `
