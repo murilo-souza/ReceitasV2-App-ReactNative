@@ -18,4 +18,16 @@
   <li><a href="">Styled components</a></li>
 </ul>
 
+
+<h2>Features</h2>
+<ul>
+  <li>Edit recipe</li>
+  <li>Delete recipe</li>
+  <li>Edit profile name</li>
+  <li>Create new recipe</li>
+  <li>Signin with google</li>
+  <li>Share recipe as PDF</li>
+  <li>SignIn with e-mail and password</li>
+<ul>
+<br/>
 :construction: Projeto em desenvolvimento :construction:
