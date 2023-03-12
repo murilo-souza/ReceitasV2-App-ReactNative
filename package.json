@@ -22,6 +22,7 @@
     "@types/react-native": "~0.70.6",
     "@types/react-navigation": "^3.4.0",
     "expo": "~47.0.12",
+    "expo-dev-client": "~2.0.1",
     "expo-font": "~11.0.1",
     "expo-print": "~12.0.0",
     "expo-sharing": "~11.0.1",

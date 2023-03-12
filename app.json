@@ -18,9 +18,9 @@
       "**/*"
     ],
     "plugins": [
-      "@react-native-firebase/app"
+      "@react-native-firebase/app",
+      "@react-native-google-signin/google-signin"
     ],
-
     "ios": {
       "supportsTablet": true
     },
@@ -34,6 +34,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "a2ddbfca-37cb-496c-b7fd-f8107fd2a371"
+      }
     }
   }
 }
