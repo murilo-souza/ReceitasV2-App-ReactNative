@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 import { Cookie, CookingPot } from 'phosphor-react-native'
 import React, { useEffect, useState } from 'react'
@@ -39,7 +40,7 @@ export function Home() {
   const [recipeType, setRecipeType] = useState<'salty' | 'sweet'>('salty')
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [name, setName] = useState<any>('')
+  let [name, setName] = useState<any>('')
 
   const navigation = useNavigation<Props>()
 

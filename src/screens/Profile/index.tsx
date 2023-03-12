@@ -42,6 +42,11 @@ export function Profile() {
     setLoading(false)
   }
 
+  function handleSignOut() {
+    setLoading(true)
+    auth().signOut()
+  }
+
   return (
     <>
       {loadingScreen ? (
@@ -62,6 +67,13 @@ export function Profile() {
               isLoading={loading}
               enabled={!loading}
               onPress={handleUpdateUser}
+            />
+            <Button
+              title="Sair"
+              variant="delete"
+              isLoading={loading}
+              enabled={!loading}
+              onPress={handleSignOut}
             />
           </Wrapper>
         </Container>

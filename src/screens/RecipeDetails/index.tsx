@@ -89,11 +89,7 @@ export function RecipeDetails() {
         <Loading />
       ) : (
         <Container>
-          <Header
-            title="Detalhes da receita"
-            share={true}
-            recipeId={recipeId}
-          />
+          <Header title="Detalhes da receita" share={true} recipe={recipe} />
 
           <RecipeScroll>
             <DetailsWrapper>

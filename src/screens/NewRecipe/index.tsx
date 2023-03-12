@@ -52,11 +52,11 @@ export function NewRecipe() {
   }
 
   async function handleNewRecipe(form: FormData) {
-    setLoading(true)
     if (!recipeType) {
       return Alert.alert('Selecione o tipo da receita')
     }
 
+    setLoading(true)
     const NewRecipe = {
       title: form.title,
       description: form.description,

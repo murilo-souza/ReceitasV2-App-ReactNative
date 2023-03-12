@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "985080108657-sep7ubofa3r2cic9qjdvmeth1r8mmrul.apps.googleusercontent.com",
+          "client_id": "985080108657-0ia0oiv69c968ujovevpdtftce95gl0b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.murilo_souza234.receita",
+            "certificate_hash": "a98cc332436a28faeb1ab61cbf0d34e118941c85"
+          }
+        },
+        {
+          "client_id": "985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,7 +35,7 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "985080108657-sep7ubofa3r2cic9qjdvmeth1r8mmrul.apps.googleusercontent.com",
+              "client_id": "985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

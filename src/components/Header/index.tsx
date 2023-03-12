@@ -1,19 +1,11 @@
 import { ArrowLeft, ShareNetwork } from 'phosphor-react-native'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
 import { Container, Title } from './styles'
 import { useNavigation } from '@react-navigation/native'
-import auth from '@react-native-firebase/auth'
-import firestore from '@react-native-firebase/firestore'
 import { printToFileAsync } from 'expo-print'
 import { shareAsync } from 'expo-sharing'
-
-type Props = {
-  title: string
-  share?: boolean
-  recipeId?: string
-}
 
 type RecipePDFProps = {
   title: string
@@ -21,34 +13,19 @@ type RecipePDFProps = {
   prepare: string
 }
 
-export function Header({ title, share = false, recipeId = '' }: Props) {
-  const [recipe, setRecipe] = useState<RecipePDFProps>({} as RecipePDFProps)
+type Props = {
+  title: string
+  share?: boolean
+  recipe?: RecipePDFProps
+}
 
-  const uid = auth().currentUser.uid
-
+export function Header({ title, share = false, recipe }: Props) {
   const theme = useTheme()
   const navigation = useNavigation()
 
   function handleGoBack() {
     navigation.goBack()
   }
-
-  useEffect(() => {
-    firestore()
-      .collection('users')
-      .doc(uid)
-      .collection('receitas')
-      .doc(recipeId)
-      .get()
-      .then((doc) => {
-        const { title, ingredients, prepare } = doc.data()
-        setRecipe({
-          title,
-          ingredients,
-          prepare,
-        })
-      })
-  }, [recipeId, uid])
 
   async function handleShareRecipeWithPDF() {
     const html = `
