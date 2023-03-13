@@ -23,10 +23,7 @@ export function UserInfo({ username, photo }: UserNameProps) {
     <UserContainer onPress={handleGoToProfileScreen}>
       <Photo
         source={{
-          uri:
-            photo === ''
-              ? 'https://i.pinimg.com/originals/59/fb/a6/59fba610c9a40c61c9f26f0a1e5db912.jpg'
-              : photo,
+          uri: photo,
         }}
       />
       <User>

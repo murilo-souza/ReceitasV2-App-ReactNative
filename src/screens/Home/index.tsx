@@ -99,7 +99,14 @@ export function Home() {
       ) : (
         <Container>
           <Header>
-            <UserInfo username={name} photo={photo} />
+            <UserInfo
+              username={name}
+              photo={
+                photo === ''
+                  ? 'https://static.vecteezy.com/ti/vetor-gratis/t2/6994468-icone-de-de-chapeu-de-chef-vetor.jpg'
+                  : photo
+              }
+            />
             <AddNewRecipeButton onPress={handleNewRecipe} />
           </Header>
           <HeaderListWrapper>
