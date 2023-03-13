@@ -41,6 +41,7 @@ export function Home() {
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
   let [name, setName] = useState<any>('')
+  let [photo, setPhoto] = useState<any>('')
 
   const navigation = useNavigation<Props>()
 
@@ -60,7 +61,9 @@ export function Home() {
       .doc(uid)
       .onSnapshot((snapshot) => {
         const name = snapshot.get('Name')
+        const photo = snapshot.get('Photo')
         setName(name)
+        setPhoto(photo)
       })
 
     const recipeList = firestore()
@@ -96,7 +99,7 @@ export function Home() {
       ) : (
         <Container>
           <Header>
-            <UserInfo username={name} />
+            <UserInfo username={name} photo={photo} />
             <AddNewRecipeButton onPress={handleNewRecipe} />
           </Header>
           <HeaderListWrapper>

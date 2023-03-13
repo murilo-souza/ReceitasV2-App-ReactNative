@@ -33,6 +33,7 @@ export function SignUpWithEmailAndPassword() {
         users.doc(uid).set({
           Email: email,
           Name: name,
+          Photo: '',
         })
         setLoading(false)
       })

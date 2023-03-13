@@ -5,8 +5,10 @@ import { Envelope } from 'phosphor-react-native'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamListPublic } from '../../routes/public.routes'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GoogleSignin } from '@react-native-google-signin/google-signin'
+import auth from '@react-native-firebase/auth'
+import firestore from '@react-native-firebase/firestore'
 
 type Props = StackNavigationProp<
   RootParamListPublic,
@@ -15,6 +17,7 @@ type Props = StackNavigationProp<
 
 export function Landing() {
   const navigation = useNavigation<Props>()
+  const [loading, setLoading] = useState(false)
 
   function handleSignInWithEmailAndPassword() {
     navigation.navigate('signInWithEmailAndPassword')
@@ -28,9 +31,25 @@ export function Landing() {
   }, [])
 
   async function handleSigninWithGoogle() {
+    setLoading(true)
     await GoogleSignin.hasPlayServices()
-    const userInfo = await GoogleSignin.signIn()
-    console.log(userInfo)
+    const { idToken, user } = await GoogleSignin.signIn()
+    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+    auth()
+      .signInWithCredential(googleCredential)
+      .then((userData) => {
+        const uid = userData.user?.uid
+        const users = firestore().collection('users')
+        users.doc(uid).set({
+          Email: user.email,
+          Name: user.givenName,
+          Photo: user.photo,
+        })
+      })
+      .catch((error) => {
+        setLoading(false)
+        console.log(error)
+      })
   }
 
   return (
@@ -50,11 +69,14 @@ export function Landing() {
         icon={GoogleSVG}
         title="Entrar com Google"
         onPress={handleSigninWithGoogle}
+        isLoading={loading}
+        enabled={!loading}
       />
       <SignInButton
         icon={Envelope}
         title="Entrar com Email e senha"
         onPress={handleSignInWithEmailAndPassword}
+        enabled={!loading}
       />
     </Container>
   )

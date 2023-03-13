@@ -27,6 +27,7 @@ export const PhotoWrapper = styled.View`
 `
 
 export const PhotoUser = styled.Image`
+  border-radius: 999px;
   width: ${RFValue(175)}px;
   height: ${RFValue(175)}px;
 `

@@ -19,6 +19,7 @@ export function Profile() {
   const navigation = useNavigation<Props>()
 
   const [name, setName] = useState<any>('')
+  const [photo, setPhoto] = useState<any>('')
   const uid = auth().currentUser.uid
 
   useEffect(() => {
@@ -28,7 +29,9 @@ export function Profile() {
       .doc(uid)
       .onSnapshot((snapshot) => {
         const name = snapshot.get('Name')
+        const photo = snapshot.get('Photo')
         setName(name)
+        setPhoto(photo)
         setLoadingScreen(false)
       })
   }, [uid])
@@ -57,7 +60,12 @@ export function Profile() {
           <Wrapper>
             <PhotoWrapper>
               <PhotoUser
-                source={{ uri: 'https://github.com/murilo-souza.png' }}
+                source={{
+                  uri:
+                    photo === ''
+                      ? 'https://i.pinimg.com/originals/59/fb/a6/59fba610c9a40c61c9f26f0a1e5db912.jpg'
+                      : photo,
+                }}
               />
             </PhotoWrapper>
             <InputProfile icon={User} onChangeText={setName} value={name} />
