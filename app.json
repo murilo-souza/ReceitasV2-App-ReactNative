@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Receitas",
-    "slug": "Receitas",
+    "slug": "receita",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -12,7 +12,8 @@
       "backgroundColor": "#18181B"
     },
     "updates": {
-      "fallbackToCacheTimeout": 0
+      "fallbackToCacheTimeout": 0,
+      "url": "https://u.expo.dev/a2ddbfca-37cb-496c-b7fd-f8107fd2a371"
     },
     "assetBundlePatterns": [
       "**/*"
@@ -22,7 +23,10 @@
       "@react-native-google-signin/google-signin"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -30,7 +34,8 @@
         "backgroundColor": "#18181B"
       },
       "package": "com.murilo_souza234.receita",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "runtimeVersion": "1.0.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
