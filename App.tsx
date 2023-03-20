@@ -1,5 +1,5 @@
+import React from 'react'
 /* eslint-disable camelcase */
-import { ActivityIndicator } from 'react-native'
 import {
   useFonts,
   Poppins_400Regular,
@@ -9,6 +9,8 @@ import { ThemeProvider } from 'styled-components/native'
 import { theme } from './src/styles/theme'
 import { StatusBar } from 'expo-status-bar'
 import { Routes } from './src/routes'
+import { Loading } from './src/components/Loading'
+import { Landing } from './src/screens/Landing'
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -19,7 +21,7 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <StatusBar translucent style="light" />
-      {fontsLoaded ? <Routes /> : <ActivityIndicator size="large" />}
+      {fontsLoaded ? <Routes /> : <Loading />}
     </ThemeProvider>
   )
 }

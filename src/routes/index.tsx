@@ -2,11 +2,11 @@ import { NavigationContainer } from '@react-navigation/native'
 import { AppRoutes } from './app.routes'
 import { PublicRoutes } from './public.routes'
 import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth'
-import { useEffect, useState } from 'react'
-import { ActivityIndicator } from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { Loading } from '../components/Loading'
 
 export function Routes() {
-  const [user, setUser] = useState<FirebaseAuthTypes.User>()
+  const [user, setUser] = useState<FirebaseAuthTypes.User | null>()
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function Routes() {
   }, [])
 
   if (isLoading) {
-    return <ActivityIndicator size="large" />
+    return <Loading />
   }
 
   return (

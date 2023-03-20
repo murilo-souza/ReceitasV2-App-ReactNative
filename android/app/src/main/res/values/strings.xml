@@ -1,5 +1,5 @@
 <resources>
-  <string name="app_name">Receitas</string>
+  <string name="app_name">receita</string>
   <string name="expo_splash_screen_resize_mode" translatable="false">contain</string>
   <string name="expo_splash_screen_status_bar_translucent" translatable="false">false</string>
 </resources>
