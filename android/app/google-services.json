@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "985080108657-0ia0oiv69c968ujovevpdtftce95gl0b.apps.googleusercontent.com",
+          "client_id": "985080108657-7evt2fbqplr75maf75bcnj4bdnhg25tg.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.murilo_souza234.receita",
-            "certificate_hash": "a98cc332436a28faeb1ab61cbf0d34e118941c85"
+            "certificate_hash": "22e8777c2872d7004f67a79b76f417a0dcdf4b66"
           }
         },
         {
