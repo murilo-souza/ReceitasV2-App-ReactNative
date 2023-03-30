@@ -22,6 +22,8 @@ export const Footer = styled.View`
   flex-direction: row;
 
   justify-content: center;
+
+  margin-bottom: ${RFValue(10)}px;
 `
 
 export const TextHighlight = styled.Text`

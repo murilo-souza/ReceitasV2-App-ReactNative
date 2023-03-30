@@ -1,3 +1,4 @@
+import React, { useState } from 'react'
 import { Button } from '../../../components/Button'
 import { SignInInput } from '../../../components/SignInInput'
 import {
@@ -11,10 +12,9 @@ import LogoSvg from '../../../assets/Recipe.svg'
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
-import { useState } from 'react'
-import { Alert, ActivityIndicator } from 'react-native'
+import { Alert } from 'react-native'
 import auth from '@react-native-firebase/auth'
-import { useTheme } from 'styled-components/native'
+
 import { RootParamListPublic } from '../../../routes/public.routes'
 
 type Props = StackNavigationProp<
@@ -23,8 +23,6 @@ type Props = StackNavigationProp<
 >
 
 export function SignInWithEmailAndPassword() {
-  const theme = useTheme()
-
   const [isLoading, setIsLoading] = useState(false)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -63,6 +61,21 @@ export function SignInWithEmailAndPassword() {
       })
   }
 
+  function handleResetPassword() {
+    if (!email) {
+      return Alert.alert(
+        'Recuperar senha',
+        'Informe e-mail para recuperação da senha',
+      )
+    }
+
+    auth()
+      .sendPasswordResetEmail(email)
+      .catch((error) => {
+        console.log(error)
+      })
+  }
+
   return (
     <Container>
       <LogoSvg />
@@ -79,6 +92,7 @@ export function SignInWithEmailAndPassword() {
           onChangeText={setPassword}
           value={password}
           secureTextEntry={true}
+          autoCapitalize="none"
         />
         <Button
           isLoading={isLoading}
@@ -87,13 +101,7 @@ export function SignInWithEmailAndPassword() {
           onPress={handleHome}
           enabled={!isLoading}
         />
-        {isLoading && (
-          <ActivityIndicator
-            color={theme.colors.indigo600}
-            size="large"
-            style={{ marginBottom: 15 }}
-          />
-        )}
+
         <Footer>
           <TextHighlight>Não tem uma conta?</TextHighlight>
           <BorderlessButton
@@ -101,6 +109,12 @@ export function SignInWithEmailAndPassword() {
             enabled={!isLoading}
           >
             <CreateAccountButtonTitle>Cadastrar</CreateAccountButtonTitle>
+          </BorderlessButton>
+        </Footer>
+        <Footer>
+          <TextHighlight>Esqueceu a senha?</TextHighlight>
+          <BorderlessButton onPress={handleResetPassword} enabled={!isLoading}>
+            <CreateAccountButtonTitle>Recuperar</CreateAccountButtonTitle>
           </BorderlessButton>
         </Footer>
       </InputWrapper>

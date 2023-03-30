@@ -27,10 +27,17 @@ export function Landing() {
     GoogleSignin.configure({
       webClientId:
         '985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com',
+      scopes: ['profile', 'email'],
     })
   }, [])
 
   async function handleSigninWithGoogle() {
+    try {
+      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
+      // google services are available
+    } catch (err) {
+      console.error('play services are not available')
+    }
     setLoading(true)
     await GoogleSignin.hasPlayServices()
     const { idToken, user } = await GoogleSignin.signIn()
@@ -65,13 +72,13 @@ export function Landing() {
         perca
       </Description>
       <AccessText>Acesse agora</AccessText>
-      <SignInButton
+      {/* <SignInButton
         icon={GoogleSVG}
         title="Entrar com Google"
         onPress={handleSigninWithGoogle}
         isLoading={loading}
         enabled={!loading}
-      />
+      /> */}
       <SignInButton
         icon={Envelope}
         title="Entrar com Email e senha"

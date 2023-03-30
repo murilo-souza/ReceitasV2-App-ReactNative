@@ -1,6 +1,6 @@
 import { Button } from '../../../components/Button'
 import { SignInInput } from '../../../components/SignInInput'
-import { Container, InputWrapper } from './styles'
+import { Container, InputWrapper, LogoContainer, Scroll } from './styles'
 import LogoSvg from '../../../assets/Recipe.svg'
 import { useState } from 'react'
 import { Alert } from 'react-native'
@@ -49,44 +49,48 @@ export function SignUpWithEmailAndPassword() {
 
   return (
     <Container>
-      <LogoSvg />
-      <InputWrapper>
-        <SignInInput
-          title="Nome"
-          placeholder="Digite seu nome"
-          onChangeText={setName}
-          value={name}
-        />
-        <SignInInput
-          title="E-mail"
-          placeholder="Digite seu E-mail"
-          onChangeText={setEmail}
-          value={email}
-        />
-        <SignInInput
-          title="Senha"
-          placeholder="Digite sua senha"
-          secureTextEntry={true}
-          onChangeText={setPassword}
-          value={password}
-          autoCapitalize="none"
-        />
-        <SignInInput
-          title="Confirmar senha"
-          placeholder="Confirme sua senha"
-          secureTextEntry={true}
-          onChangeText={setConfirmePassword}
-          value={confirmePassword}
-          autoCapitalize="none"
-        />
-        <Button
-          title="Cadastrar"
-          variant="submit"
-          onPress={handleHome}
-          isLoading={loading}
-          enabled={!loading}
-        />
-      </InputWrapper>
+      <Scroll>
+        <LogoContainer>
+          <LogoSvg />
+        </LogoContainer>
+        <InputWrapper>
+          <SignInInput
+            title="Nome"
+            placeholder="Digite seu nome"
+            onChangeText={setName}
+            value={name}
+          />
+          <SignInInput
+            title="E-mail"
+            placeholder="Digite seu E-mail"
+            onChangeText={setEmail}
+            value={email}
+          />
+          <SignInInput
+            title="Senha"
+            placeholder="Digite sua senha"
+            secureTextEntry={true}
+            onChangeText={setPassword}
+            value={password}
+            autoCapitalize="none"
+          />
+          <SignInInput
+            title="Confirmar senha"
+            placeholder="Confirme sua senha"
+            secureTextEntry={true}
+            onChangeText={setConfirmePassword}
+            value={confirmePassword}
+            autoCapitalize="none"
+          />
+          <Button
+            title="Cadastrar"
+            variant="submit"
+            onPress={handleHome}
+            isLoading={loading}
+            enabled={!loading}
+          />
+        </InputWrapper>
+      </Scroll>
     </Container>
   )
 }

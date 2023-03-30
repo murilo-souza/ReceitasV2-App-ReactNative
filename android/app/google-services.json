@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "985080108657-h0ltag148vtmsornbuk0536i3cr9ias5.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.murilo_souza234.receita",
+            "certificate_hash": "73355021d34f475400c86b33f92b6ff96f1a8c26"
+          }
+        },
+        {
           "client_id": "985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com",
           "client_type": 3
         }

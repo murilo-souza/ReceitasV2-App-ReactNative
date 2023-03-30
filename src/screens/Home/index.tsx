@@ -54,7 +54,7 @@ export function Home() {
   }
 
   useEffect(() => {
-    const uid = auth().currentUser.uid
+    const uid = auth().currentUser?.uid
 
     firestore()
       .collection('users')
