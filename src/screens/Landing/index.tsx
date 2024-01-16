@@ -1,12 +1,11 @@
 import { SignInButton } from '../../components/SignInButton'
 import { AccessText, Container, Description, Title } from './styles'
-import GoogleSVG from '../../assets/googleIcon.svg'
 import { Envelope } from 'phosphor-react-native'
 import { useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamListPublic } from '../../routes/public.routes'
 import React, { useEffect, useState } from 'react'
-import { GoogleSignin } from '@react-native-google-signin/google-signin'
+// import { GoogleSignin } from '@react-native-google-signin/google-signin'
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
 
@@ -23,41 +22,41 @@ export function Landing() {
     navigation.navigate('signInWithEmailAndPassword')
   }
 
-  useEffect(() => {
-    GoogleSignin.configure({
-      webClientId:
-        '985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com',
-      scopes: ['profile', 'email'],
-    })
-  }, [])
+  // useEffect(() => {
+  //   GoogleSignin.configure({
+  //     webClientId:
+  //       '985080108657-4g73um7h4l49kkbj9t3euj3kun98mbdi.apps.googleusercontent.com',
+  //     scopes: ['profile', 'email'],
+  //   })
+  // }, [])
 
-  async function handleSigninWithGoogle() {
-    try {
-      await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
-      // google services are available
-    } catch (err) {
-      console.error('play services are not available')
-    }
-    setLoading(true)
-    await GoogleSignin.hasPlayServices()
-    const { idToken, user } = await GoogleSignin.signIn()
-    const googleCredential = auth.GoogleAuthProvider.credential(idToken)
-    auth()
-      .signInWithCredential(googleCredential)
-      .then((userData) => {
-        const uid = userData.user?.uid
-        const users = firestore().collection('users')
-        users.doc(uid).set({
-          Email: user.email,
-          Name: user.givenName,
-          Photo: user.photo,
-        })
-      })
-      .catch((error) => {
-        setLoading(false)
-        console.log(error)
-      })
-  }
+  // async function handleSigninWithGoogle() {
+  //   try {
+  //     await GoogleSignin.hasPlayServices({ showPlayServicesUpdateDialog: true })
+  //     // google services are available
+  //   } catch (err) {
+  //     console.error('play services are not available')
+  //   }
+  //   setLoading(true)
+  //   await GoogleSignin.hasPlayServices()
+  //   const { idToken, user } = await GoogleSignin.signIn()
+  //   const googleCredential = auth.GoogleAuthProvider.credential(idToken)
+  //   auth()
+  //     .signInWithCredential(googleCredential)
+  //     .then((userData) => {
+  //       const uid = userData.user?.uid
+  //       const users = firestore().collection('users')
+  //       users.doc(uid).set({
+  //         Email: user.email,
+  //         Name: user.givenName,
+  //         Photo: user.photo,
+  //       })
+  //     })
+  //     .catch((error) => {
+  //       setLoading(false)
+  //       console.log(error)
+  //     })
+  // }
 
   return (
     <Container>

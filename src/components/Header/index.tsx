@@ -4,7 +4,7 @@ import { BorderlessButton } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
 import { Container, Title } from './styles'
 import { useNavigation } from '@react-navigation/native'
-import { printToFileAsync } from 'expo-print'
+import * as Print from 'expo-print'
 import { shareAsync } from 'expo-sharing'
 
 type RecipePDFProps = {
@@ -52,7 +52,7 @@ export function Header({ title, share = false, recipe }: Props) {
       </html>
     `
 
-    const file = await printToFileAsync({
+    const file = await Print.printToFileAsync({
       html,
       base64: false,
     })
