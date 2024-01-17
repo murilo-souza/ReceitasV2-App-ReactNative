@@ -1,11 +1,10 @@
-import { RectButton } from 'react-native-gesture-handler'
 import styled, { css } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
 interface ButtonProps {
   variant: 'submit' | 'delete' | 'edit'
 }
 
-export const Container = styled(RectButton)<ButtonProps>`
+export const Container = styled.TouchableOpacity<ButtonProps>`
   width: 100%;
   height: ${RFValue(50)}px;
 
@@ -21,18 +20,21 @@ export const Container = styled(RectButton)<ButtonProps>`
     variant === 'submit' &&
     css`
       background-color: ${(props) => props.theme.colors.indigo600};
+      opacity: ${(props) => (props.disabled ? 0.5 : 1)};
     `}
 
   ${({ variant }) =>
     variant === 'delete' &&
     css`
       background-color: ${(props) => props.theme.colors.red600};
+      opacity: ${(props) => (props.disabled ? 0.5 : 1)};
     `}
 
   ${({ variant }) =>
     variant === 'edit' &&
     css`
       background-color: ${(props) => props.theme.colors.white};
+      opacity: ${(props) => (props.disabled ? 0.5 : 1)};
     `}
 `
 

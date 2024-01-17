@@ -10,7 +10,6 @@ import { theme } from './src/styles/theme'
 import { StatusBar } from 'expo-status-bar'
 import { Routes } from './src/routes'
 import { Loading } from './src/components/Loading'
-import { Landing } from './src/screens/Landing'
 
 export default function App() {
   const [fontsLoaded] = useFonts({

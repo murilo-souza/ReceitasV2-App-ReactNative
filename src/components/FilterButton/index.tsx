@@ -1,10 +1,10 @@
 import { IconProps } from 'phosphor-react-native'
 import React, { ElementType } from 'react'
-import { RectButtonProps } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
 import { Container, Stroke, Title } from './styles'
+import { TouchableOpacityProps } from 'react-native'
 
-interface Props extends RectButtonProps {
+interface Props extends TouchableOpacityProps {
   title: string
   icon: ElementType<IconProps>
   isActive: boolean

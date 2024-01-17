@@ -1,21 +1,23 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 import { Container, Error } from './styles'
 import { Control, Controller } from 'react-hook-form'
 import { TextInputProps } from 'react-native'
-import { InputLarge } from '../../InputLarge'
+import { InputArray } from '../../InputArray'
 
 interface Props extends TextInputProps {
   control: Control
   name: string
   error: any
   title: string
+  children: ReactNode
 }
 
-export function LargeInputForm({
+export function ArrayInputForm({
   control,
   name,
   error,
   title,
+  children,
   ...rest
 }: Props) {
   return (
@@ -23,12 +25,14 @@ export function LargeInputForm({
       <Controller
         control={control}
         render={({ field: { onChange, value } }) => (
-          <InputLarge
+          <InputArray
             title={title}
             onChangeText={onChange}
             value={value}
             {...rest}
-          />
+          >
+            {children}
+          </InputArray>
         )}
         name={name}
       />

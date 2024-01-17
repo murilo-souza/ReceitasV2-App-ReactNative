@@ -1,33 +1,9 @@
-import { RFValue } from 'react-native-responsive-fontsize'
 import styled from 'styled-components/native'
 import { theme } from '../../styles/theme'
+import { RFValue } from 'react-native-responsive-fontsize'
 import { BorderlessButton } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
-  flex: 1;
-
-  background-color: ${(props) => props.theme.colors.zinc900};
-
-  padding: 20px 20px 0 20px;
-`
-
-export const Form = styled.ScrollView.attrs({
-  showsVerticalScrollIndicator: false,
-})`
-  margin-top: 20px;
-`
-
-export const TypeButtonWrapper = styled.View`
-  display: flex;
-  flex-direction: row;
-
-  align-items: center;
-  justify-content: space-between;
-
-  margin-bottom: 40px;
-`
-
-export const Card = styled.View`
   width: 100%;
   height: ${RFValue(40)}px;
 

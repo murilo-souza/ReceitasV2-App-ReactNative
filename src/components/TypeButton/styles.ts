@@ -23,7 +23,7 @@ export const Container = styled(RectButton)`
   align-items: center;
   justify-content: center;
 
-  width: ${RFValue(150)}px;
+  width: ${RFValue(140)}px;
   height: ${RFValue(50)}px;
   border-radius: 5px;
 `

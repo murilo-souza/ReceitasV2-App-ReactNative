@@ -99,7 +99,7 @@ export function SignInWithEmailAndPassword() {
           title="Entrar"
           variant="submit"
           onPress={handleHome}
-          enabled={!isLoading}
+          disabled={isLoading}
         />
 
         <Footer>

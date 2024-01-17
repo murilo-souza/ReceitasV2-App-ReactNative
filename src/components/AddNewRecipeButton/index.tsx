@@ -1,10 +1,10 @@
 import { Plus } from 'phosphor-react-native'
 import React from 'react'
-import { RectButtonProps } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
 import { Container } from './styles'
+import { TouchableOpacityProps } from 'react-native'
 
-export function AddNewRecipeButton({ ...rest }: RectButtonProps) {
+export function AddNewRecipeButton({ ...rest }: TouchableOpacityProps) {
   const theme = useTheme()
 
   return (

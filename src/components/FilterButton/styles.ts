@@ -1,6 +1,5 @@
 import styled, { css } from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
-import { RectButton } from 'react-native-gesture-handler'
 
 interface TypeProps {
   isActive: boolean
@@ -15,10 +14,10 @@ export const Stroke = styled.View<TypeProps>`
     `}
 `
 
-export const Container = styled(RectButton)<TypeProps>`
+export const Container = styled.TouchableOpacity<TypeProps>`
   display: flex;
   flex-direction: row;
-  width: ${RFValue(150)}px;
+  width: ${RFValue(140)}px;
 
   align-items: center;
   justify-content: center;

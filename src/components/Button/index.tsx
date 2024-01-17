@@ -1,10 +1,9 @@
 import React from 'react'
-import { RectButtonProps } from 'react-native-gesture-handler'
 import { Container, Title } from './styles'
-import { ActivityIndicator } from 'react-native'
+import { ActivityIndicator, TouchableOpacityProps } from 'react-native'
 import { useTheme } from 'styled-components/native'
 
-type Props = RectButtonProps & {
+type Props = TouchableOpacityProps & {
   title: string
   variant: 'submit' | 'delete' | 'edit'
   isLoading: boolean
