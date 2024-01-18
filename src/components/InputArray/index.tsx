@@ -12,16 +12,17 @@ import { TextInputProps } from 'react-native'
 type Props = TextInputProps & {
   title: string
   children: ReactNode
+  onPress: () => void
 }
 
-export function InputArray({ title, children, ...rest }: Props) {
+export function InputArray({ title, children, onPress, ...rest }: Props) {
   return (
     <Container>
       <Title>{title}</Title>
       {children}
       <InputWrapper>
         <RecipeInputText {...rest} />
-        <ButtonAdd>
+        <ButtonAdd onPress={onPress}>
           <TitleButtonAdd>Adicionar</TitleButtonAdd>
         </ButtonAdd>
       </InputWrapper>

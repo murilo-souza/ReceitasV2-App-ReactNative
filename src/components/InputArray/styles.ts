@@ -1,9 +1,11 @@
 import styled from 'styled-components/native'
 import { RFValue } from 'react-native-responsive-fontsize'
 import { theme } from '../../styles/theme'
+import { TouchableOpacityProps } from 'react-native'
 
 export const Container = styled.View`
   width: 100%;
+  margin-bottom: 30px;
 `
 
 export const Title = styled.Text`
@@ -30,7 +32,7 @@ export const RecipeInputText = styled.TextInput.attrs({
   padding: 10px;
 `
 
-export const ButtonAdd = styled.TouchableOpacity`
+export const ButtonAdd = styled.TouchableOpacity<TouchableOpacityProps>`
   width: ${RFValue(80)}px;
   height: ${RFValue(35)}px;
 
@@ -55,4 +57,7 @@ export const InputWrapper = styled.View`
   flex-direction: row;
 
   justify-content: center;
+
+  background-color: ${(props) => props.theme.colors.zinc900};
+  padding-top: 10px;
 `

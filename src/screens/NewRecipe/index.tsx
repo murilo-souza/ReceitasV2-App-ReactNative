@@ -4,6 +4,8 @@ import {
   Container,
   DeleteButton,
   Form,
+  ListContainer,
+  ListContainerSecond,
   Title,
   TypeButtonWrapper,
 } from './styles'
@@ -14,30 +16,31 @@ import { Cookie, CookingPot, Trash } from 'phosphor-react-native'
 import { useForm } from 'react-hook-form'
 import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Alert, ActivityIndicator, FlatList } from 'react-native'
+import { Alert, ActivityIndicator } from 'react-native'
 import { SmallInputForm } from '../../components/InputForm/SmallInputForm'
-import { ArrayInputForm } from '../../components/InputForm/ArrayInputForm'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 import { RootParamList } from '../../routes/app.routes'
 import { useTheme } from 'styled-components/native'
-import { FormCard } from '../../components/FormCard'
+import { InputArray } from '../../components/InputArray'
 
 type Props = StackNavigationProp<RootParamList, 'newRecipe'>
 interface IngredientsProps {
+  id: string
   ingredient: string
 }
 
-interface PreparesProps {
-  prepare: string
+interface StepsProps {
+  id: string
+  step: string
 }
 interface FormData {
   title: string
   description: string
   ingredients: IngredientsProps[]
-  prepare: PreparesProps[]
+  prepare: StepsProps[]
 }
 
 const schema = yup.object().shape({
@@ -49,7 +52,13 @@ const schema = yup.object().shape({
 
 export function NewRecipe() {
   const [recipeType, setRecipeType] = useState('')
-  const [ingridientList, setIngridientList] = useState<IngredientsProps[]>([])
+
+  const [ingredients, setIngredients] = useState<IngredientsProps[]>([])
+  const [ingredient, setIngredient] = useState('')
+
+  const [steps, setSteps] = useState<StepsProps[]>([])
+  const [step, setStep] = useState('')
+
   const navigation = useNavigation<Props>()
   const [loading, setLoading] = useState(false)
   const theme = useTheme()
@@ -65,6 +74,28 @@ export function NewRecipe() {
 
   function handleRecipeType(type: 'salty' | 'sweet') {
     setRecipeType(type)
+  }
+
+  function handleAddNewIngredient() {
+    setIngredients([{ id: String(Math.random()), ingredient }, ...ingredients])
+    setIngredient('')
+  }
+
+  function handleDeleteIngredient(id: string) {
+    const filteredIngredients = ingredients.filter(
+      (ingredient) => ingredient.id !== id,
+    )
+    setIngredients(filteredIngredients)
+  }
+
+  function handleAddNewStep() {
+    setSteps([...steps, { id: String(Math.random()), step }])
+    setStep('')
+  }
+
+  function handleDeleteStep(id: string) {
+    const filteredSteps = steps.filter((step) => step.id !== id)
+    setSteps(filteredSteps)
   }
 
   async function handleNewRecipe(form: FormData) {
@@ -118,49 +149,43 @@ export function NewRecipe() {
           maxLength={50}
         />
 
-        <ArrayInputForm
-          name={'ingredients'}
+        <InputArray
           title="Ingredientes"
           placeholder="Adicione um ingrediente"
-          control={control}
-          error={errors.ingredients && errors.ingredients.message}
-          multiline
+          onChangeText={setIngredient}
+          value={ingredient}
+          onPress={handleAddNewIngredient}
         >
-          <FlatList
-            data={ingridientList}
-            keyExtractor={(item) => item.ingredient}
-            renderItem={({ item }) => (
-              <Card>
+          <ListContainer>
+            {ingredients.map((item) => (
+              <Card key={item.id}>
                 <Title>{item.ingredient}</Title>
-                <DeleteButton>
+                <DeleteButton onPress={() => handleDeleteIngredient(item.id)}>
                   <Trash color={theme.colors.red600} size={20} />
                 </DeleteButton>
               </Card>
-            )}
-          />
-        </ArrayInputForm>
+            ))}
+          </ListContainer>
+        </InputArray>
 
-        {/* <ArrayInputForm
-          name={'prepare'}
+        <InputArray
           title="Modo de preparo"
           placeholder="Como é feita sua receita?"
-          control={control}
-          error={errors.prepare && errors.prepare.message}
-          multiline
+          onChangeText={setStep}
+          value={step}
+          onPress={handleAddNewStep}
         >
-          <FlatList
-            data={notes}
-            keyExtractor={(item) => item}
-            renderItem={({ item }) => (
-              <Card>
-                <Title>{item}</Title>
-                <DeleteButton>
+          <ListContainerSecond>
+            {steps.map((item) => (
+              <Card key={item.id}>
+                <Title>{item.step}</Title>
+                <DeleteButton onPress={() => handleDeleteStep(item.id)}>
                   <Trash color={theme.colors.red600} size={20} />
                 </DeleteButton>
               </Card>
-            )}
-          />
-        </ArrayInputForm> */}
+            ))}
+          </ListContainerSecond>
+        </InputArray>
 
         <TypeButtonWrapper>
           <TypeButton

@@ -10,6 +10,7 @@ interface Props extends TextInputProps {
   error: any
   title: string
   children: ReactNode
+  onPress: () => void
 }
 
 export function ArrayInputForm({
@@ -18,6 +19,7 @@ export function ArrayInputForm({
   error,
   title,
   children,
+  onPress,
   ...rest
 }: Props) {
   return (
@@ -29,6 +31,7 @@ export function ArrayInputForm({
             title={title}
             onChangeText={onChange}
             value={value}
+            onPress={onPress}
             {...rest}
           >
             {children}
