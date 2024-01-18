@@ -5,10 +5,30 @@ import { Home } from '../screens/Home'
 import { NewRecipe } from '../screens/NewRecipe'
 import { Profile } from '../screens/Profile'
 import { RecipeDetails } from '../screens/RecipeDetails'
+import {
+  IngredientesStep,
+  IngredientsProps,
+} from '../screens/NewRecipe/IngredientesStep'
+import { PrepareStep } from '../screens/NewRecipe/PrepareStep'
 
 export type RootParamList = {
   home: undefined
   newRecipe: undefined
+  ingredientStep: {
+    newRecipe: {
+      title: string
+      description: string
+      type: string
+    }
+  }
+  prepareStep: {
+    newRecipe: {
+      title: string
+      description: string
+      type: string
+      ingredients: IngredientsProps[]
+    }
+  }
   recipeDetails: { recipeId: string }
   editRecipe: { recipeId: string }
   profile: undefined
@@ -24,6 +44,8 @@ export function AppRoutes() {
     >
       <Screen name="home" component={Home} />
       <Screen name="newRecipe" component={NewRecipe} />
+      <Screen name="ingredientStep" component={IngredientesStep} />
+      <Screen name="prepareStep" component={PrepareStep} />
       <Screen name="recipeDetails" component={RecipeDetails} />
       <Screen name="editRecipe" component={EditRecipe} />
       <Screen name="profile" component={Profile} />

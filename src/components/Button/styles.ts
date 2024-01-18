@@ -14,6 +14,8 @@ export const Container = styled.TouchableOpacity<ButtonProps>`
 
   border-radius: 5px;
 
+  margin-top: auto;
+
   margin-bottom: 31px;
 
   ${({ variant }) =>
