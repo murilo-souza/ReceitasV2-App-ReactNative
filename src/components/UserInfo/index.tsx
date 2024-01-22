@@ -4,12 +4,13 @@ import { Photo, User, UserDescription, UserContainer, UserName } from './styles'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
 import { useNavigation } from '@react-navigation/native'
+import { FirebaseFirestoreTypes } from '@react-native-firebase/firestore'
 
 type Props = StackNavigationProp<RootParamList, 'profile'>
 
 type UserNameProps = {
-  username: string
-  photo: string
+  username: FirebaseFirestoreTypes.DocumentFieldType
+  photo: FirebaseFirestoreTypes.DocumentFieldType
 }
 
 export function UserInfo({ username, photo }: UserNameProps) {

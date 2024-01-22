@@ -1,7 +1,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable camelcase */
 import { Cookie, CookingPot } from 'phosphor-react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useState } from 'react'
 import { AddNewRecipeButton } from '../../components/AddNewRecipeButton'
 import { Card } from '../../components/Card'
 import { FlatList } from 'react-native'
@@ -15,7 +15,7 @@ import {
   ListTitle,
   Quantity,
 } from './styles'
-import { useNavigation } from '@react-navigation/native'
+import { useFocusEffect, useNavigation } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
 import firestore, {
@@ -40,8 +40,8 @@ export function Home() {
   const [recipeType, setRecipeType] = useState<'salty' | 'sweet'>('salty')
   const [recipes, setRecipes] = useState<RecipeCardProps[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  let [name, setName] = useState<any>('')
-  let [photo, setPhoto] = useState<any>('')
+  let [name, setName] = useState<FirebaseFirestoreTypes.DocumentFieldType>('')
+  let [photo, setPhoto] = useState<FirebaseFirestoreTypes.DocumentFieldType>('')
 
   const navigation = useNavigation<Props>()
 
@@ -53,44 +53,60 @@ export function Home() {
     navigation.navigate('recipeDetails', { recipeId })
   }
 
-  useEffect(() => {
-    const uid = auth().currentUser?.uid
+  useFocusEffect(
+    useCallback(() => {
+      const uid = auth().currentUser?.uid
 
-    firestore()
-      .collection('users')
-      .doc(uid)
-      .onSnapshot((snapshot) => {
-        const name = snapshot.get('Name')
-        const photo = snapshot.get('Photo')
-        setName(name)
-        setPhoto(photo)
-      })
+      const fetchData = async () => {
+        try {
+          const userSnapshot = await firestore()
+            .collection('users')
+            .doc(uid)
+            .get()
+          const name = userSnapshot.get('Name')
+          const photo = userSnapshot.get('Photo')
+          setName(name)
+          setPhoto(photo)
 
-    const recipeList = firestore()
-      .collection('users')
-      .doc(uid)
-      .collection('receitas')
-      .where('type', '==', recipeType)
-      .onSnapshot((snapshot) => {
-        const data = snapshot.docs.map((doc) => {
-          const { title, description, ingredients, prepare, created_at } =
-            doc.data()
+          firestore()
+            .collection('users')
+            .doc(uid)
+            .collection('receitas')
+            .orderBy('created_at', 'desc')
+            .where('type', '==', recipeType)
+            .onSnapshot((recipeSnapshot) => {
+              if (recipeSnapshot) {
+                const data = recipeSnapshot.docs.map((doc) => {
+                  const {
+                    title,
+                    description,
+                    ingredients,
+                    prepare,
+                    created_at,
+                  } = doc.data()
 
-          return {
-            id: doc.id,
-            title,
-            description,
-            ingredients,
-            prepare,
-            created_at,
-          }
-        })
-        setRecipes(data)
-      })
+                  return {
+                    id: doc.id,
+                    title,
+                    description,
+                    ingredients,
+                    prepare,
+                    created_at,
+                  }
+                })
 
-    setIsLoading(false)
-    return recipeList
-  }, [recipeType])
+                setRecipes(data)
+              }
+            })
+        } catch (error) {
+          console.error('Erro ao buscar receitas:', error)
+        } finally {
+          setIsLoading(false)
+        }
+      }
+      fetchData()
+    }, [recipeType]),
+  )
 
   return (
     <>
