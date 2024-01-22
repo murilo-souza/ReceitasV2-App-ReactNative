@@ -11,7 +11,7 @@ import {
   Title,
 } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert, FlatList } from 'react-native'
+import { Alert } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -20,6 +20,10 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
 import { Loading } from '../../components/Loading'
 import { IngredientsProps } from '../NewRecipe/IngredientesStep'
+import { StepsProps } from '../NewRecipe/PrepareStep'
+
+import Checkbox from 'expo-checkbox'
+import { theme } from '../../styles/theme'
 
 type RouteParams = {
   recipeId: string
@@ -28,13 +32,14 @@ type RouteParams = {
 type RecipeCardProps = {
   title: string
   ingredients: IngredientsProps[]
-  prepare: string[]
+  prepare: StepsProps[]
 }
 
 type Props = StackNavigationProp<RootParamList, 'home'>
 
 export function RecipeDetails() {
   const [recipe, setRecipe] = useState<RecipeCardProps>({} as RecipeCardProps)
+  const [itemsChecked, setItemsChecked] = useState([])
 
   const [loading, setLoading] = useState(true)
 
@@ -60,12 +65,21 @@ export function RecipeDetails() {
       [
         {
           text: 'Manter',
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
           onPress: () => {},
           style: 'cancel',
         },
         { text: 'Excluir', onPress: () => handleDeleteRecipe() },
       ],
     )
+  }
+
+  function handleCheckbox(itemId: string) {
+    if (itemsChecked.includes(itemId)) {
+      setItemsChecked(itemsChecked.filter((id) => id !== itemId))
+    } else {
+      setItemsChecked([...itemsChecked, itemId])
+    }
   }
 
   function handleEditRecipe(recipeId: string) {
@@ -105,22 +119,38 @@ export function RecipeDetails() {
                 content={recipe.title}
                 icon={Notebook}
               />
-              <CardDetails title="Ingredientes" icon={Notebook}>
-                <FlatList
-                  data={recipe.ingredients}
-                  keyExtractor={(item) => item.id}
-                  renderItem={({ item }) => (
-                    <ListOptions>
-                      <Title>{item.ingredient}</Title>
+              <CardDetails title="Ingredientes" icon={Scroll}>
+                {recipe.ingredients.map((item) => {
+                  const isChecked = itemsChecked.includes(item.id)
+
+                  return (
+                    <ListOptions key={item.id}>
+                      <Checkbox
+                        value={isChecked}
+                        onValueChange={() => handleCheckbox(item.id)}
+                        color={isChecked ? theme.colors.indigo500 : undefined}
+                      />
+                      <Title checked={isChecked}>{item.ingredient}</Title>
                     </ListOptions>
-                  )}
-                />
+                  )
+                })}
               </CardDetails>
-              <CardDetails
-                title="Título"
-                content={recipe.title}
-                icon={Notebook}
-              />
+              <CardDetails title="Título" icon={CookingPot}>
+                {recipe.prepare.map((item) => {
+                  const isChecked = itemsChecked.includes(item.id)
+
+                  return (
+                    <ListOptions key={item.id}>
+                      <Checkbox
+                        value={isChecked}
+                        onValueChange={() => handleCheckbox(item.id)}
+                        color={isChecked ? theme.colors.indigo500 : undefined}
+                      />
+                      <Title checked={isChecked}>{item.step}</Title>
+                    </ListOptions>
+                  )
+                })}
+              </CardDetails>
             </DetailsWrapper>
             <Button
               title="Editar receita"

@@ -7,11 +7,12 @@ import { useNavigation } from '@react-navigation/native'
 import * as Print from 'expo-print'
 import { shareAsync } from 'expo-sharing'
 import { IngredientsProps } from '../../screens/NewRecipe/IngredientesStep'
+import { StepsProps } from '../../screens/NewRecipe/PrepareStep'
 
 type RecipePDFProps = {
   title: string
   ingredients: IngredientsProps[]
-  prepare: string[]
+  prepare: StepsProps[]
 }
 
 type Props = {

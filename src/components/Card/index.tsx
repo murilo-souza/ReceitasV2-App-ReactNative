@@ -1,10 +1,10 @@
 import { ForkKnife } from 'phosphor-react-native'
 import React from 'react'
-import { RectButtonProps } from 'react-native-gesture-handler'
 import { useTheme } from 'styled-components/native'
 import { Container, Description, TextWrapper, Title } from './styles'
+import { TouchableOpacityProps } from 'react-native'
 
-type Props = RectButtonProps & {
+type Props = TouchableOpacityProps & {
   title: string
   description: string
 }

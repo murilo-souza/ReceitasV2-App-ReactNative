@@ -19,7 +19,7 @@ export function CardDetails({ title, content, icon: Icon, children }: Props) {
         <Icon size={25} color={theme.colors.indigo400} weight="fill" />
         <Title>{title}</Title>
       </Header>
-      <Content>{content}</Content>
+      {content && <Content>{content}</Content>}
       {children}
     </Container>
   )

@@ -1,6 +1,10 @@
-import styled from 'styled-components/native'
+import styled, { css } from 'styled-components/native'
 import { theme } from '../../styles/theme'
 import { RFValue } from 'react-native-responsive-fontsize'
+
+interface IsChecked {
+  checked: boolean
+}
 
 export const Container = styled.View`
   flex: 1;
@@ -25,18 +29,27 @@ export const ListOptions = styled.View`
 
   align-items: center;
 
-  background-color: ${theme.colors.indigo600};
-
-  margin-bottom: 10px;
-
   border-radius: 5px;
 
   padding: 10px;
 `
 
-export const Title = styled.Text`
+export const Title = styled.Text<IsChecked>`
   font-size: ${RFValue(14)}px;
   font-family: ${theme.fonts.regular};
 
-  color: ${theme.colors.slate100};
+  margin-left: 10px;
+
+  ${({ checked }) =>
+    checked === true &&
+    css`
+      text-decoration: line-through;
+      color: ${theme.colors.zinc400};
+    `}
+
+  ${({ checked }) =>
+    checked === false &&
+    css`
+      color: ${theme.colors.slate100};
+    `}
 `

@@ -12,7 +12,7 @@ import { FormCard } from '../../../components/FormCard'
 import { InputArray } from '../../../components/InputArray'
 import { Button } from '../../../components/Button'
 
-interface StepsProps {
+export interface StepsProps {
   id: string
   step: string
 }
