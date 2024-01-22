@@ -8,6 +8,7 @@ import * as Print from 'expo-print'
 import { shareAsync } from 'expo-sharing'
 import { IngredientsProps } from '../../screens/NewRecipe/IngredientesStep'
 import { StepsProps } from '../../screens/NewRecipe/PrepareStep'
+import { useWindowDimensions } from 'react-native'
 
 type RecipePDFProps = {
   title: string
@@ -24,6 +25,7 @@ type Props = {
 export function Header({ title, share = false, recipe }: Props) {
   const theme = useTheme()
   const navigation = useNavigation()
+  const { width } = useWindowDimensions()
 
   function handleGoBack() {
     navigation.goBack()
@@ -33,24 +35,59 @@ export function Header({ title, share = false, recipe }: Props) {
     const html = `
       <html>
         <body>
-          <h1 style="font-size: 3rem">Receita Compartilhada</h1>
-          <br/>
-          
-          <h2 style="font-size: 2rem">Título</h2>
-          <p style="font-size: 1.5rem">${recipe.title}</p>
-          <br/>
-
-          <h2 style="font-size: 2rem">Ingredientes</h2>
-          <textarea rows=${recipe.ingredients.length / 12} cols="40">
-            ${recipe.ingredients}
-          </textarea>
-          <br/>
-
-          <h2 style="font-size: 2rem">Modo de preparo</h2>
-          <textarea rows=${recipe.prepare.length / 15} cols="40">
-            ${recipe.prepare}
-          </textarea>
+          <header>
+            <h1 style="font-size: 2rem">Receita Compartilhada</h1>  
+            <p style="font-size: 2rem">${recipe.title}</p>
+          </header>
+          <section>
+            <h2>Ingredientes:</h2>
+            <ul>
+                ${recipe.ingredients.map((item) => `<li>${item.ingredient}</li>`)}
+            </ul>
+          </section>
+          <section>
+            <h2>Modo de preparo:</h2>
+            <ol>
+                ${recipe.prepare.map((item, i) => `<li>${i + 1}º ${item.step}</li>`)}
+            </ol>
+          </section>
         </body>
+        <style>
+          body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+          }
+          header {
+            background-color: ${theme.colors.indigo800};
+            text-align: center;
+            padding: 10px;
+            color: white;
+          }
+          section {
+            background-color: white;
+            padding: 30px 100px;
+            max-width: ${width}px
+          }
+          ul {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          ol {
+            list-style-type: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+          }
+          li {
+            font-size: 1.5rem
+            margin-bottom: 10px;
+          }
+        </style>
       </html>
     `
 
