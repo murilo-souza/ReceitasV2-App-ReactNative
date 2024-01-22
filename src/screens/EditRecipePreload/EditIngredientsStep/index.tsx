@@ -57,7 +57,7 @@ export function EditIngredientsStep() {
 
     setIsLoading(true)
 
-    const newRecipe = {
+    const editedRecipe = {
       title: recipe.title,
       description: recipe.description,
       type: recipe.type,
@@ -65,7 +65,10 @@ export function EditIngredientsStep() {
       prepare: recipe.prepare,
     }
 
-    navigation.navigate('editPrepareStep', { newRecipe, recipeId })
+    navigation.navigate('editPrepareStep', {
+      editRecipe: editedRecipe,
+      recipeId,
+    })
 
     setIsLoading(false)
   }

@@ -24,7 +24,7 @@ const schema = yup.object().shape({
   description: yup.string().required('Descrição é obrigatória'),
 })
 
-export function EditRecipePreload({ preload, recipeId }) {
+export function EditRecipe({ preload, recipeId }) {
   const navigation = useNavigation<Props>()
   const [loading, setLoading] = useState(false)
 

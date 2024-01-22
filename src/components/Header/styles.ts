@@ -11,6 +11,8 @@ export const Container = styled.View`
   justify-content: space-between;
 
   margin-top: ${getStatusBarHeight() + RFValue(5)}px;
+
+  padding-bottom: 10px;
 `
 
 export const Title = styled.Text`

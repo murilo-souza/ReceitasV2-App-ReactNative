@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { EditRecipe } from '../screens/EditRecipe'
+import { EditRecipePreload } from '../screens/EditRecipeee'
 import { Home } from '../screens/Home'
 import { NewRecipe } from '../screens/NewRecipe'
 import { Profile } from '../screens/Profile'
@@ -47,7 +47,7 @@ export type RootParamList = {
   }
   editPrepareStep: {
     recipeId: string
-    newRecipe: {
+    editRecipe: {
       title: string
       description: string
       type: string
@@ -75,7 +75,7 @@ export function AppRoutes() {
 
       <Screen name="recipeDetails" component={RecipeDetails} />
 
-      <Screen name="editRecipe" component={EditRecipe} />
+      <Screen name="editRecipe" component={EditRecipePreload} />
       <Screen name="editIngredientStep" component={EditIngredientsStep} />
       <Screen name="editPrepareStep" component={EditPrepareStep} />
 

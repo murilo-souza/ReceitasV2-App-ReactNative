@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { EditRecipePreload } from '../EditRecipePreload'
+import { EditRecipe } from '../EditRecipePreload'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { useRoute } from '@react-navigation/native'
@@ -21,7 +21,7 @@ type RouteParams = {
   recipeId: string
 }
 
-export function EditRecipe() {
+export function EditRecipePreload() {
   const [recipeToEdit, setRecipeToEdit] = useState<FormData>(null)
   const route = useRoute()
   const { recipeId } = route.params as RouteParams
@@ -48,7 +48,7 @@ export function EditRecipe() {
   }, [recipeId, uid])
 
   return recipeToEdit ? (
-    <EditRecipePreload preload={recipeToEdit} recipeId={recipeId} />
+    <EditRecipe preload={recipeToEdit} recipeId={recipeId} />
   ) : (
     <Container>
       <ActivityIndicator size="large" color={theme.colors.indigo600} />

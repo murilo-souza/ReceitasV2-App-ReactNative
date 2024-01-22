@@ -15,7 +15,7 @@ import { StepsProps } from '../../NewRecipe/PrepareStep'
 
 type RouteParams = {
   recipeId: string
-  newRecipe: {
+  editRecipe: {
     title: string
     description: string
     type: string
@@ -31,8 +31,8 @@ export function EditPrepareStep() {
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation<Props>()
   const route = useRoute()
-  const { newRecipe, recipeId } = route.params as RouteParams
-  const [steps, setSteps] = useState<StepsProps[]>(newRecipe.prepare)
+  const { editRecipe, recipeId } = route.params as RouteParams
+  const [steps, setSteps] = useState<StepsProps[]>(editRecipe.prepare)
   const uid = auth().currentUser.uid
 
   function handleAddNewStep() {
@@ -55,10 +55,10 @@ export function EditPrepareStep() {
     }
 
     const editedRecipe = {
-      title: newRecipe.title,
-      description: newRecipe.description,
-      type: newRecipe.type,
-      ingredients: newRecipe.ingredients,
+      title: editRecipe.title,
+      description: editRecipe.description,
+      type: editRecipe.type,
+      ingredients: editRecipe.ingredients,
       prepare: steps,
       updated_at: firestore.FieldValue.serverTimestamp(),
     }
