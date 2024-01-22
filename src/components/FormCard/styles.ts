@@ -5,7 +5,6 @@ import { BorderlessButton } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
   width: 100%;
-  height: ${RFValue(40)}px;
 
   display: flex;
   flex-direction: row;
@@ -22,10 +21,12 @@ export const Container = styled.View`
   padding: 10px;
 `
 export const Title = styled.Text`
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(14)}px;
   font-family: ${theme.fonts.regular};
 
   color: ${theme.colors.slate100};
+
+  width: 80%;
 `
 
 export const DeleteButton = styled(BorderlessButton)`

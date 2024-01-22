@@ -5,13 +5,14 @@ import { theme } from '../../styles/theme'
 
 type FormCardProps = {
   title: string
+  onPress: () => void
 }
 
-export function FormCard({ title }: FormCardProps) {
+export function FormCard({ title, onPress }: FormCardProps) {
   return (
     <Container>
       <Title>{title}</Title>
-      <DeleteButton>
+      <DeleteButton onPress={onPress}>
         <Trash color={theme.colors.red600} size={20} />
       </DeleteButton>
     </Container>

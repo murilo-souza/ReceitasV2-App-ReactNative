@@ -8,15 +8,6 @@ export const Container = styled.View`
   margin-bottom: 30px;
 `
 
-export const Title = styled.Text`
-  font-family: ${(props) => props.theme.fonts.semiBold};
-
-  color: ${(props) => props.theme.colors.white};
-  font-size: ${RFValue(14)}px;
-
-  margin-bottom: 5px;
-`
-
 export const RecipeInputText = styled.TextInput.attrs({
   placeholderTextColor: theme.colors.zinc400,
 })`

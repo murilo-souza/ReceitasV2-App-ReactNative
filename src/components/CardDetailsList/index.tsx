@@ -1,16 +1,15 @@
 import { IconProps } from 'phosphor-react-native'
-import React, { ElementType, ReactNode } from 'react'
+import React, { ElementType } from 'react'
 import { useTheme } from 'styled-components/native'
 import { Container, Content, Header, Title } from './styles'
 
 type Props = {
   title: string
-  content?: string
+  content: string[]
   icon: ElementType<IconProps>
-  children?: ReactNode
 }
 
-export function CardDetails({ title, content, icon: Icon, children }: Props) {
+export function CardDetailsList({ title, content, icon: Icon }: Props) {
   const theme = useTheme()
 
   return (
@@ -19,8 +18,6 @@ export function CardDetails({ title, content, icon: Icon, children }: Props) {
         <Icon size={25} color={theme.colors.indigo400} weight="fill" />
         <Title>{title}</Title>
       </Header>
-      <Content>{content}</Content>
-      {children}
     </Container>
   )
 }

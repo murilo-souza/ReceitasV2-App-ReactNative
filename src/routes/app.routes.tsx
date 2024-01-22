@@ -15,7 +15,7 @@ export type RootParamList = {
   home: undefined
   newRecipe: undefined
   ingredientStep: {
-    newRecipe: {
+    recipe: {
       title: string
       description: string
       type: string

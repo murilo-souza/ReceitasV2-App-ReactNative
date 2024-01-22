@@ -9,7 +9,6 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Alert } from 'react-native'
 import { SmallInputForm } from '../../components/InputForm/SmallInputForm'
-import { LargeInputForm } from '../../components/InputForm/ArrayInputForm'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
@@ -100,24 +99,6 @@ export function EditRecipePreload({ preload, recipeId }) {
           error={errors.description && errors.description.message}
         />
 
-        <LargeInputForm
-          name={'ingredients'}
-          title="Ingredientes"
-          placeholder="Digite os ingredientes da sua receita"
-          control={control}
-          error={errors.ingredients && errors.ingredients.message}
-          multiline
-        />
-
-        <LargeInputForm
-          name={'prepare'}
-          title="Modo de preparo"
-          placeholder="Como é feita sua receita?"
-          control={control}
-          error={errors.prepare && errors.prepare.message}
-          multiline
-        />
-
         <TypeButtonWrapper>
           <TypeButton
             title="Salgado"
@@ -134,7 +115,7 @@ export function EditRecipePreload({ preload, recipeId }) {
         </TypeButtonWrapper>
         <Button
           isLoading={loading}
-          enabled={!loading}
+          disabled={loading}
           title="Editar receita"
           variant="edit"
           onPress={handleSubmit(handleNewRecipe)}

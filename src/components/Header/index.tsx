@@ -6,11 +6,12 @@ import { Container, Title } from './styles'
 import { useNavigation } from '@react-navigation/native'
 import * as Print from 'expo-print'
 import { shareAsync } from 'expo-sharing'
+import { IngredientsProps } from '../../screens/NewRecipe/IngredientesStep'
 
 type RecipePDFProps = {
   title: string
-  ingredients: string
-  prepare: string
+  ingredients: IngredientsProps[]
+  prepare: string[]
 }
 
 type Props = {

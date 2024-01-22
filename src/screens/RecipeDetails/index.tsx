@@ -3,9 +3,15 @@ import React, { useEffect, useState } from 'react'
 import { Button } from '../../components/Button'
 import { CardDetails } from '../../components/CardDetails/inde'
 import { Header } from '../../components/Header'
-import { RecipeScroll, Container, DetailsWrapper } from './styles'
+import {
+  RecipeScroll,
+  Container,
+  DetailsWrapper,
+  ListOptions,
+  Title,
+} from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert } from 'react-native'
+import { Alert, FlatList } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -13,6 +19,7 @@ import firestore from '@react-native-firebase/firestore'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
 import { Loading } from '../../components/Loading'
+import { IngredientsProps } from '../NewRecipe/IngredientesStep'
 
 type RouteParams = {
   recipeId: string
@@ -20,8 +27,8 @@ type RouteParams = {
 
 type RecipeCardProps = {
   title: string
-  ingredients: string
-  prepare: string
+  ingredients: IngredientsProps[]
+  prepare: string[]
 }
 
 type Props = StackNavigationProp<RootParamList, 'home'>
@@ -98,15 +105,21 @@ export function RecipeDetails() {
                 content={recipe.title}
                 icon={Notebook}
               />
+              <CardDetails title="Ingredientes" icon={Notebook}>
+                <FlatList
+                  data={recipe.ingredients}
+                  keyExtractor={(item) => item.id}
+                  renderItem={({ item }) => (
+                    <ListOptions>
+                      <Title>{item.ingredient}</Title>
+                    </ListOptions>
+                  )}
+                />
+              </CardDetails>
               <CardDetails
-                title="Ingredientes"
-                content={recipe.ingredients}
-                icon={Scroll}
-              />
-              <CardDetails
-                title="Modo de Preparo"
-                content={recipe.prepare}
-                icon={CookingPot}
+                title="Título"
+                content={recipe.title}
+                icon={Notebook}
               />
             </DetailsWrapper>
             <Button

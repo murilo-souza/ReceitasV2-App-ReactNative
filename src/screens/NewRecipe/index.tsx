@@ -51,13 +51,13 @@ export function NewRecipe() {
     }
 
     setLoading(true)
-    const newRecipe = {
+    const recipe = {
       title: form.title,
       description: form.description,
       type: recipeType,
     }
 
-    navigation.navigate('ingredientStep', { newRecipe })
+    navigation.navigate('ingredientStep', { recipe })
 
     setLoading(false)
   }
