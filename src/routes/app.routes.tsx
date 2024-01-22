@@ -1,6 +1,6 @@
 import React from 'react'
 import { createStackNavigator } from '@react-navigation/stack'
-import { EditRecipePreload } from '../screens/EditRecipeee'
+import { EditRecipePreload } from '../screens/EditRecipePreload'
 import { Home } from '../screens/Home'
 import { NewRecipe } from '../screens/NewRecipe'
 import { Profile } from '../screens/Profile'
@@ -10,8 +10,8 @@ import {
   IngredientsProps,
 } from '../screens/NewRecipe/IngredientesStep'
 import { PrepareStep, StepsProps } from '../screens/NewRecipe/PrepareStep'
-import { EditIngredientsStep } from '../screens/EditRecipePreload/EditIngredientsStep'
-import { EditPrepareStep } from '../screens/EditRecipePreload/EditPrepareStep'
+import { EditIngredientsStep } from '../screens/EditRecipe/EditIngredientsStep'
+import { EditPrepareStep } from '../screens/EditRecipe/EditPrepareStep'
 
 export type RootParamList = {
   home: undefined

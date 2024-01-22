@@ -1,110 +1,57 @@
-import React, { useState } from 'react'
-import { Container, Form, TypeButtonWrapper } from './styles'
-import { Header } from '../../components/Header'
-import { Button } from '../../components/Button'
-import { TypeButton } from '../../components/TypeButton'
-import { Cookie, CookingPot } from 'phosphor-react-native'
-import { useForm } from 'react-hook-form'
-import * as yup from 'yup'
-import { yupResolver } from '@hookform/resolvers/yup'
-import { Alert } from 'react-native'
-import { SmallInputForm } from '../../components/InputForm/SmallInputForm'
-import { StackNavigationProp } from '@react-navigation/stack'
-import { useNavigation } from '@react-navigation/native'
-import { RootParamList } from '../../routes/app.routes'
+import React, { useState, useEffect } from 'react'
+import { EditRecipe } from '.'
+import firestore from '@react-native-firebase/firestore'
+import auth from '@react-native-firebase/auth'
+import { useRoute } from '@react-navigation/native'
+import { ActivityIndicator } from 'react-native'
+import { Container } from './styles'
+import { useTheme } from 'styled-components/native'
+import { IngredientsProps } from '../NewRecipe/IngredientesStep'
+import { StepsProps } from '../NewRecipe/PrepareStep'
 
-type Props = StackNavigationProp<RootParamList, 'editRecipe'>
 interface FormData {
   title: string
   description: string
+  ingredients: IngredientsProps[]
+  prepare: StepsProps[]
+  type: string
 }
 
-const schema = yup.object().shape({
-  title: yup.string().required('Título é obrigatório'),
-  description: yup.string().required('Descrição é obrigatória'),
-})
+type RouteParams = {
+  recipeId: string
+}
 
-export function EditRecipe({ preload, recipeId }) {
-  const navigation = useNavigation<Props>()
-  const [loading, setLoading] = useState(false)
+export function EditRecipePreload() {
+  const [recipeToEdit, setRecipeToEdit] = useState<FormData>(null)
+  const route = useRoute()
+  const { recipeId } = route.params as RouteParams
+  const uid = auth().currentUser.uid
+  const theme = useTheme()
 
-  const [recipeType, setRecipeType] = useState(preload.type)
+  useEffect(() => {
+    firestore()
+      .collection('users')
+      .doc(uid)
+      .collection('receitas')
+      .doc(recipeId)
+      .get()
+      .then((doc) => {
+        const { title, description, ingredients, prepare, type } = doc.data()
+        setRecipeToEdit({
+          title,
+          description,
+          ingredients,
+          prepare,
+          type,
+        })
+      })
+  }, [recipeId, uid])
 
-  function handleRecipeType(type: 'salty' | 'sweet') {
-    setRecipeType(type)
-  }
-
-  async function handleNewRecipe(form: FormData) {
-    if (!recipeType) {
-      return Alert.alert('Selecione o tipo da receita')
-    }
-
-    setLoading(true)
-
-    const NewRecipe = {
-      title: form.title,
-      description: form.description,
-      type: recipeType,
-      ingredients: preload.ingredients,
-      prepare: preload.prepare,
-    }
-
-    navigation.navigate('editIngredientStep', { recipe: NewRecipe, recipeId })
-    setLoading(false)
-  }
-
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: yupResolver(schema),
-    defaultValues: preload,
-  })
-
-  return (
+  return recipeToEdit ? (
+    <EditRecipe preload={recipeToEdit} recipeId={recipeId} />
+  ) : (
     <Container>
-      <Header title="Editar receita" />
-
-      <Form>
-        <SmallInputForm
-          name={'title'}
-          title="Título"
-          placeholder="Digite o titulo da sua receita"
-          control={control}
-          error={errors.title && errors.title.message}
-        />
-
-        <SmallInputForm
-          name={'description'}
-          title="Descrição"
-          placeholder="De uma descrição para sua receita"
-          control={control}
-          error={errors.description && errors.description.message}
-        />
-
-        <TypeButtonWrapper>
-          <TypeButton
-            title="Salgado"
-            icon={CookingPot}
-            isActive={recipeType === 'salty'}
-            onPress={() => handleRecipeType('salty')}
-          />
-          <TypeButton
-            title="Sobremesa"
-            icon={Cookie}
-            isActive={recipeType === 'sweet'}
-            onPress={() => handleRecipeType('sweet')}
-          />
-        </TypeButtonWrapper>
-      </Form>
-      <Button
-        isLoading={loading}
-        disabled={loading}
-        title="Próximo"
-        variant="edit"
-        onPress={handleSubmit(handleNewRecipe)}
-      />
+      <ActivityIndicator size="large" color={theme.colors.indigo600} />
     </Container>
   )
 }
