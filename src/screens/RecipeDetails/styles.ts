@@ -38,7 +38,7 @@ export const Title = styled.Text<IsChecked>`
   font-size: ${RFValue(14)}px;
   font-family: ${theme.fonts.regular};
 
-  margin-left: 10px;
+  margin-left: 15px;
 
   ${({ checked }) =>
     checked === true &&

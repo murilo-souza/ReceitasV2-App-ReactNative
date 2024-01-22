@@ -6,12 +6,14 @@ import { useRoute } from '@react-navigation/native'
 import { ActivityIndicator } from 'react-native'
 import { Container } from './styles'
 import { useTheme } from 'styled-components/native'
+import { IngredientsProps } from '../NewRecipe/IngredientesStep'
+import { StepsProps } from '../NewRecipe/PrepareStep'
 
 interface FormData {
   title: string
   description: string
-  ingredients: string
-  prepare: string
+  ingredients: IngredientsProps[]
+  prepare: StepsProps[]
   type: string
 }
 

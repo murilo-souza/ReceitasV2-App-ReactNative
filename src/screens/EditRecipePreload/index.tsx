@@ -9,30 +9,23 @@ import * as yup from 'yup'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Alert } from 'react-native'
 import { SmallInputForm } from '../../components/InputForm/SmallInputForm'
-import firestore from '@react-native-firebase/firestore'
-import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { useNavigation } from '@react-navigation/native'
 import { RootParamList } from '../../routes/app.routes'
 
-type Props = StackNavigationProp<RootParamList, 'newRecipe'>
+type Props = StackNavigationProp<RootParamList, 'editRecipe'>
 interface FormData {
   title: string
   description: string
-  ingredients: string
-  prepare: string
 }
 
 const schema = yup.object().shape({
   title: yup.string().required('Título é obrigatório'),
   description: yup.string().required('Descrição é obrigatória'),
-  ingredients: yup.string().required('Ingredientes é obrigatória'),
-  prepare: yup.string().required('Preparação é obrigatório'),
 })
 
 export function EditRecipePreload({ preload, recipeId }) {
   const navigation = useNavigation<Props>()
-  const uid = auth().currentUser.uid
   const [loading, setLoading] = useState(false)
 
   const [recipeType, setRecipeType] = useState(preload.type)
@@ -51,27 +44,18 @@ export function EditRecipePreload({ preload, recipeId }) {
     const NewRecipe = {
       title: form.title,
       description: form.description,
-      ingredients: form.ingredients,
-      prepare: form.prepare,
       type: recipeType,
+      ingredients: preload.ingredients,
+      prepare: preload.prepare,
     }
 
-    await firestore()
-      .collection('users')
-      .doc(uid)
-      .collection('receitas')
-      .doc(recipeId)
-      .update(NewRecipe)
-
-    navigation.navigate('home')
+    navigation.navigate('editIngredientStep', { recipe: NewRecipe, recipeId })
     setLoading(false)
-    reset()
   }
 
   const {
     control,
     handleSubmit,
-    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
@@ -113,14 +97,14 @@ export function EditRecipePreload({ preload, recipeId }) {
             onPress={() => handleRecipeType('sweet')}
           />
         </TypeButtonWrapper>
-        <Button
-          isLoading={loading}
-          disabled={loading}
-          title="Editar receita"
-          variant="edit"
-          onPress={handleSubmit(handleNewRecipe)}
-        />
       </Form>
+      <Button
+        isLoading={loading}
+        disabled={loading}
+        title="Próximo"
+        variant="edit"
+        onPress={handleSubmit(handleNewRecipe)}
+      />
     </Container>
   )
 }

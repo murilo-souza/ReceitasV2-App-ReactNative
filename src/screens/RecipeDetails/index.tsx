@@ -135,7 +135,7 @@ export function RecipeDetails() {
                   )
                 })}
               </CardDetails>
-              <CardDetails title="Título" icon={CookingPot}>
+              <CardDetails title="Modo de Preparo" icon={CookingPot}>
                 {recipe.prepare.map((item) => {
                   const isChecked = itemsChecked.includes(item.id)
 
