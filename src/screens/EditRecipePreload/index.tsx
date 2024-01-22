@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { EditRecipe } from '.'
 import firestore from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { useRoute } from '@react-navigation/native'
@@ -8,6 +7,7 @@ import { Container } from './styles'
 import { useTheme } from 'styled-components/native'
 import { IngredientsProps } from '../NewRecipe/IngredientesStep'
 import { StepsProps } from '../NewRecipe/PrepareStep'
+import { EditRecipe } from '../EditRecipe'
 
 interface FormData {
   title: string

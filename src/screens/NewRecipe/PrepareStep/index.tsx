@@ -52,7 +52,7 @@ export function PrepareStep() {
   }
 
   async function handleAddNewRecipe() {
-    if (!steps) {
+    if (steps.length === 0) {
       return Alert.alert('É necessário pelo menos uma etapa na receita')
     }
 

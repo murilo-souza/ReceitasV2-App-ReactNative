@@ -8,7 +8,6 @@ import { Button } from '../../../components/Button'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../../routes/app.routes'
-
 export interface IngredientsProps {
   id: string
   ingredient: string
@@ -49,7 +48,7 @@ export function IngredientesStep() {
   }
 
   function handleNextStep() {
-    if (!ingredients) {
+    if (ingredients.length === 0) {
       return Alert.alert('É necessário pelo menos 1 ingrediente na receita')
     }
 

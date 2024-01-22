@@ -136,7 +136,7 @@ export function RecipeDetails() {
                 })}
               </CardDetails>
               <CardDetails title="Modo de Preparo" icon={CookingPot}>
-                {recipe.prepare.map((item) => {
+                {recipe.prepare.map((item, i) => {
                   const isChecked = itemsChecked.includes(item.id)
 
                   return (
@@ -146,7 +146,9 @@ export function RecipeDetails() {
                         onValueChange={() => handleCheckbox(item.id)}
                         color={isChecked ? theme.colors.indigo500 : undefined}
                       />
-                      <Title checked={isChecked}>{item.step}</Title>
+                      <Title checked={isChecked}>
+                        {i + 1}º {item.step}
+                      </Title>
                     </ListOptions>
                   )
                 })}
