@@ -1,4 +1,4 @@
-package murilo.recipe;
+package murilo.recipe1;
 
 import android.os.Build;
 import android.os.Bundle;

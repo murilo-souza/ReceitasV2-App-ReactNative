@@ -22,7 +22,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#18181B"
       },
-      "package": "murilo.recipe",
+      "package": "murilo.recipe1",
       "googleServicesFile": "./google-services.json"
     },
     "extra": {
