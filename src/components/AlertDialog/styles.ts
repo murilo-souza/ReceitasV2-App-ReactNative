@@ -72,7 +72,7 @@ export const StayButton = styled.TouchableOpacity`
 
   border-radius: 5px;
 
-  margin-right: 10px;
+  margin-right: 20px;
 
   background-color: ${theme.colors.slate100};
 `
