@@ -11,7 +11,7 @@ import {
   Title,
 } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert, Modal } from 'react-native'
+import { Modal } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -104,7 +104,6 @@ export function RecipeDetails() {
             transparent={true}
             visible={modalVisible}
             onRequestClose={() => {
-              Alert.alert('Modal has been closed.')
               setModalVisible(!modalVisible)
             }}
           >

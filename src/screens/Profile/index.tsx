@@ -20,6 +20,8 @@ import { useNavigation } from '@react-navigation/native'
 import { Loading } from '../../components/Loading'
 import { useTheme } from 'styled-components/native'
 import * as ImagePicker from 'expo-image-picker'
+import { Modal } from 'react-native'
+import { AlertDialog } from '../../components/AlertDialog'
 
 type Props = StackNavigationProp<RootParamList, 'home'>
 
@@ -28,6 +30,8 @@ export function Profile() {
   const [loadingScreen, setLoadingScreen] = useState(false)
   const navigation = useNavigation<Props>()
   const theme = useTheme()
+
+  const [modalVisible, setModalVisible] = useState(false)
 
   const [name, setName] = useState<FirebaseFirestoreTypes.DocumentFieldType>('')
   const [photo, setPhoto] =
@@ -91,6 +95,24 @@ export function Profile() {
       ) : (
         <Container>
           <Header title="Detalhes de perfil" />
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible)
+            }}
+          >
+            <AlertDialog
+              alert="Deletar receita"
+              description="Tem certeza que deseja excluir essa receita?"
+              stay={() => setModalVisible(false)}
+              notStay={handleSignOut}
+              stayText="Ficar"
+              notStayText="Sair"
+            />
+          </Modal>
+
           <Wrapper>
             <PhotoWrapper>
               <PhotoUser
@@ -122,7 +144,7 @@ export function Profile() {
               variant="delete"
               isLoading={loading}
               disabled={loading}
-              onPress={handleSignOut}
+              onPress={() => setModalVisible(true)}
             />
           </Wrapper>
         </Container>
