@@ -14,12 +14,9 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-
     "plugins": [
       "@react-native-firebase/app"
     ],
-
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
@@ -27,6 +24,11 @@
       },
       "package": "murilo.recipe",
       "googleServicesFile": "./google-services.json"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "914403a2-6bbe-4ae4-9f12-c2126cbd1ba1"
+      }
     }
   }
 }
