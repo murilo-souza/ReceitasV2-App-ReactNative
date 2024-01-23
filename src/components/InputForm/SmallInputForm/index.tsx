@@ -7,7 +7,7 @@ import { InputSmall } from '../../InputSmall'
 interface Props extends TextInputProps {
   control: Control
   name: string
-  error: any
+  error: string
   title: string
 }
 
