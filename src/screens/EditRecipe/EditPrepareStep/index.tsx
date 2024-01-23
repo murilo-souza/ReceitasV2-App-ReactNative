@@ -6,12 +6,13 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../../routes/app.routes'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Header } from '../../../components/Header'
-import { Alert, FlatList } from 'react-native'
+import { FlatList, Modal } from 'react-native'
 import { FormCard } from '../../../components/FormCard'
 import { InputArray } from '../../../components/InputArray'
 import { Button } from '../../../components/Button'
 import { IngredientsProps } from '../../NewRecipe/IngredientesStep'
 import { StepsProps } from '../../NewRecipe/PrepareStep'
+import { AlertDialog } from '../../../components/AlertDialog'
 
 type RouteParams = {
   recipeId: string
@@ -29,6 +30,7 @@ type Props = StackNavigationProp<RootParamList, 'editPrepareStep'>
 export function EditPrepareStep() {
   const [step, setStep] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const navigation = useNavigation<Props>()
   const route = useRoute()
   const { editRecipe, recipeId } = route.params as RouteParams
@@ -37,7 +39,7 @@ export function EditPrepareStep() {
 
   function handleAddNewStep() {
     if (!step) {
-      return Alert.alert('Digite uma etapa para adicionar')
+      return setModalVisible(true)
     }
 
     setSteps([...steps, { id: String(Math.random()), step }])
@@ -50,8 +52,8 @@ export function EditPrepareStep() {
   }
 
   async function handleAddNewRecipe() {
-    if (!steps) {
-      return Alert.alert('É necessário pelo menos uma etapa na receita')
+    if (steps.length === 0) {
+      return setModalVisible(true)
     }
 
     const editedRecipe = {
@@ -78,6 +80,22 @@ export function EditPrepareStep() {
   return (
     <Container>
       <Header title="Criar receita" />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}
+      >
+        <AlertDialog
+          alert="Erro"
+          description="Nessário adicionar pelo menos uma etapa de preparo"
+          stay={() => setModalVisible(false)}
+          stayText="Ok"
+          onlyStay={true}
+        />
+      </Modal>
       <Title>Preparo</Title>
       <CardContainer>
         <FlatList

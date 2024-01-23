@@ -7,10 +7,11 @@ import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../../routes/app.routes'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { Header } from '../../../components/Header'
-import { Alert, FlatList } from 'react-native'
+import { FlatList, Modal } from 'react-native'
 import { FormCard } from '../../../components/FormCard'
 import { InputArray } from '../../../components/InputArray'
 import { Button } from '../../../components/Button'
+import { AlertDialog } from '../../../components/AlertDialog'
 
 export interface StepsProps {
   id: string
@@ -31,6 +32,7 @@ type Props = StackNavigationProp<RootParamList, 'prepareStep'>
 export function PrepareStep() {
   const [steps, setSteps] = useState<StepsProps[]>([])
   const [step, setStep] = useState('')
+  const [modalVisible, setModalVisible] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation<Props>()
   const route = useRoute()
@@ -39,7 +41,7 @@ export function PrepareStep() {
 
   function handleAddNewStep() {
     if (!step) {
-      return Alert.alert('Digite uma etapa para adicionar')
+      return setModalVisible(true)
     }
 
     setSteps([...steps, { id: String(Math.random()), step }])
@@ -53,7 +55,7 @@ export function PrepareStep() {
 
   async function handleAddNewRecipe() {
     if (steps.length === 0) {
-      return Alert.alert('É necessário pelo menos uma etapa na receita')
+      return setModalVisible(true)
     }
 
     const NewRecipe = {
@@ -80,6 +82,22 @@ export function PrepareStep() {
   return (
     <Container>
       <Header title="Criar receita" />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}
+      >
+        <AlertDialog
+          alert="Erro"
+          description="Nessário adicionar pelo menos uma etapa de preparo"
+          stay={() => setModalVisible(false)}
+          stayText="Ok"
+          onlyStay={true}
+        />
+      </Modal>
       <Title>Preparo</Title>
       <CardContainer>
         <FlatList

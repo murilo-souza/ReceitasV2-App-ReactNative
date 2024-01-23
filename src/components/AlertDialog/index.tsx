@@ -15,9 +15,10 @@ interface AlertDialogProps {
   alert: string
   description: string
   stayText: string
-  notStayText: string
+  notStayText?: string
   stay: () => void
-  notStay: () => void
+  notStay?: () => void
+  onlyStay?: boolean
 }
 
 export function AlertDialog({
@@ -27,6 +28,7 @@ export function AlertDialog({
   stayText,
   notStayText,
   notStay,
+  onlyStay = false,
 }: AlertDialogProps) {
   return (
     <ConteredView>
@@ -37,9 +39,11 @@ export function AlertDialog({
           <StayButton onPress={stay}>
             <StayText>{stayText}</StayText>
           </StayButton>
-          <NotStayButton onPress={notStay}>
-            <NotStayText>{notStayText}</NotStayText>
-          </NotStayButton>
+          {!onlyStay && (
+            <NotStayButton onPress={notStay}>
+              <NotStayText>{notStayText}</NotStayText>
+            </NotStayButton>
+          )}
         </ActionWrapper>
       </DeleteAlert>
     </ConteredView>

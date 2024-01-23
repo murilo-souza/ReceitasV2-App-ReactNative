@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { CardContainer, Container, Title } from './styles'
 import { Header } from '../../../components/Header'
 import { InputArray } from '../../../components/InputArray'
-import { Alert, FlatList } from 'react-native'
+import { FlatList, Modal } from 'react-native'
 import { FormCard } from '../../../components/FormCard'
 import { Button } from '../../../components/Button'
 import { useNavigation, useRoute } from '@react-navigation/native'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../../routes/app.routes'
+import { AlertDialog } from '../../../components/AlertDialog'
 export interface IngredientsProps {
   id: string
   ingredient: string
@@ -25,6 +26,7 @@ type Props = StackNavigationProp<RootParamList, 'ingredientStep'>
 
 export function IngredientesStep() {
   const [ingredients, setIngredients] = useState<IngredientsProps[]>([])
+  const [modalVisible, setModalVisible] = useState(false)
   const [ingredient, setIngredient] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const navigation = useNavigation<Props>()
@@ -33,7 +35,7 @@ export function IngredientesStep() {
 
   function handleAddNewIngredient() {
     if (!ingredient) {
-      return Alert.alert('Digite um ingrediente para adicionar')
+      return setModalVisible(true)
     }
 
     setIngredients([{ id: String(Math.random()), ingredient }, ...ingredients])
@@ -49,7 +51,7 @@ export function IngredientesStep() {
 
   function handleNextStep() {
     if (ingredients.length === 0) {
-      return Alert.alert('É necessário pelo menos 1 ingrediente na receita')
+      return setModalVisible(true)
     }
 
     setIsLoading(true)
@@ -69,6 +71,22 @@ export function IngredientesStep() {
   return (
     <Container>
       <Header title="Criar receita" />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible)
+        }}
+      >
+        <AlertDialog
+          alert="Erro"
+          description="Nessário adicionar pelo menos um ingrediente"
+          stay={() => setModalVisible(false)}
+          stayText="Ok"
+          onlyStay={true}
+        />
+      </Modal>
       <Title>Ingredientes</Title>
       <CardContainer>
         <FlatList

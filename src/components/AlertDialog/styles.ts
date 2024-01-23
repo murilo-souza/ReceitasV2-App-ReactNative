@@ -55,6 +55,8 @@ export const NotStayButton = styled.TouchableOpacity`
   width: 80px;
 
   border-radius: 5px;
+
+  margin-left: 20px;
 `
 
 export const NotStayText = styled.Text`
@@ -71,8 +73,6 @@ export const StayButton = styled.TouchableOpacity`
   width: 80px;
 
   border-radius: 5px;
-
-  margin-right: 20px;
 
   background-color: ${theme.colors.slate100};
 `
