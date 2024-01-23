@@ -10,7 +10,9 @@ import {
   PhotoWrapper,
   Wrapper,
 } from './styles'
-import firestore from '@react-native-firebase/firestore'
+import firestore, {
+  FirebaseFirestoreTypes,
+} from '@react-native-firebase/firestore'
 import auth from '@react-native-firebase/auth'
 import { StackNavigationProp } from '@react-navigation/stack'
 import { RootParamList } from '../../routes/app.routes'
@@ -27,8 +29,9 @@ export function Profile() {
   const navigation = useNavigation<Props>()
   const theme = useTheme()
 
-  const [name, setName] = useState<any>('')
-  const [photo, setPhoto] = useState<any>('')
+  const [name, setName] = useState<FirebaseFirestoreTypes.DocumentFieldType>('')
+  const [photo, setPhoto] =
+    useState<FirebaseFirestoreTypes.DocumentFieldType>('')
   const uid = auth().currentUser.uid
 
   useEffect(() => {
@@ -102,19 +105,23 @@ export function Profile() {
                 <Camera color={theme.colors.white} size={30} weight="light" />
               </PhotoButton>
             </PhotoWrapper>
-            <InputProfile icon={User} onChangeText={setName} value={name} />
+            <InputProfile
+              icon={User}
+              onChangeText={setName}
+              value={String(name)}
+            />
             <Button
               title="Editar perfil"
               variant="submit"
               isLoading={loading}
-              enabled={!loading}
+              disabled={loading}
               onPress={handleUpdateUser}
             />
             <Button
               title="Sair"
               variant="delete"
               isLoading={loading}
-              enabled={!loading}
+              disabled={loading}
               onPress={handleSignOut}
             />
           </Wrapper>

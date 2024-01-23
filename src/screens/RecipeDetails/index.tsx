@@ -11,7 +11,7 @@ import {
   Title,
 } from './styles'
 import { useNavigation, useRoute } from '@react-navigation/native'
-import { Alert } from 'react-native'
+import { Alert, Modal } from 'react-native'
 
 import auth from '@react-native-firebase/auth'
 import firestore from '@react-native-firebase/firestore'
@@ -24,6 +24,7 @@ import { StepsProps } from '../NewRecipe/PrepareStep'
 
 import Checkbox from 'expo-checkbox'
 import { theme } from '../../styles/theme'
+import { AlertDialog } from '../../components/AlertDialog'
 
 type RouteParams = {
   recipeId: string
@@ -48,7 +49,10 @@ export function RecipeDetails() {
   const { recipeId } = route.params as RouteParams
   const uid = auth().currentUser.uid
 
+  const [modalVisible, setModalVisible] = useState(false)
+
   function handleDeleteRecipe() {
+    setModalVisible(false)
     firestore()
       .collection('users')
       .doc(uid)
@@ -56,22 +60,6 @@ export function RecipeDetails() {
       .doc(recipeId)
       .delete()
     navigation.navigate('home')
-  }
-
-  function AlertDelete() {
-    Alert.alert(
-      'Deletar receita',
-      'Tem certeza que deseja excluir essa receita?',
-      [
-        {
-          text: 'Manter',
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          onPress: () => {},
-          style: 'cancel',
-        },
-        { text: 'Excluir', onPress: () => handleDeleteRecipe() },
-      ],
-    )
   }
 
   function handleCheckbox(itemId: string) {
@@ -111,7 +99,24 @@ export function RecipeDetails() {
       ) : (
         <Container>
           <Header title="Detalhes da receita" share={true} recipe={recipe} />
-
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              Alert.alert('Modal has been closed.')
+              setModalVisible(!modalVisible)
+            }}
+          >
+            <AlertDialog
+              alert="Deletar receita"
+              description="Tem certeza que deseja excluir essa receita?"
+              stay={() => setModalVisible(false)}
+              notStay={handleDeleteRecipe}
+              stayText="Manter"
+              notStayText="Excluir"
+            />
+          </Modal>
           <RecipeScroll>
             <DetailsWrapper>
               <CardDetails
@@ -164,7 +169,7 @@ export function RecipeDetails() {
             <Button
               title="Deletar receita"
               variant="delete"
-              onPress={AlertDelete}
+              onPress={() => setModalVisible(true)}
               isLoading={false}
             />
           </RecipeScroll>
